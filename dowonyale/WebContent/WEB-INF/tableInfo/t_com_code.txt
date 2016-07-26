@@ -1,0 +1,61 @@
+drop table t_com_cd;
+
+CREATE TABLE `t_com_cd` (
+              `cd_id` int(10) NOT NULL auto_increment COMMENT '코드아이디',  
+              `high_cd_id` int(10) DEFAULT 0 COMMENT '상위코드아이디',
+              `cd_name` varchar(100) DEFAULT NULL COMMENT '코드명',                
+              `cd_type` char(1) DEFAULT 'U' COMMENT '코드권한',
+              `order_no` int(3) DEFAULT NULL COMMENT '정렬순서',                    
+              `del_yn` char(1) DEFAULT 'N',                                             
+              `in_date` datetime DEFAULT NULL,                                          
+              `in_user` varchar(50) DEFAULT NULL,                                           
+              `up_date` datetime DEFAULT NULL,                                          
+              `up_user` varchar(50) DEFAULT NULL,                                           
+              PRIMARY KEY (`cd_id`)                                               
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table t_com_cd auto_increment = 1001;
+
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(101, '과목명', 'dowonyale', now());
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(102, '신규/종료', 'dowonyale', now());
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(103, '수업구분', 'dowonyale', now());
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(104, '납입구분', 'dowonyale', now());
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(105, '지출구분', 'dowonyale', now());
+insert into t_com_cd (cd_id, cd_name, in_user, in_date)values(106, '진단구분', 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(101, '언어치료', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(101, '심리치료', 2, 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(102, '신규', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(102, '진행', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(102, '이번달종료', 1, 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '언어일반', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '심리일반', 2, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '그룹/언어', 4, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '그룹/심리', 5, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '상담/언어', 6, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '상담/심리', 7, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '소견서', 8, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '문제11.2', 9, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '문제12.8', 10, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '문제14.4', 11, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '장애14', 12, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '장애16', 13, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '장애18', 14, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '장애20', 15, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(103, '장애22', 16, 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(104, '현금', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(104, '카드', 2, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(104, '영수증', 3, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(104, '미납', 4, 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(105, '급여', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(105, '공제', 2, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(105, '고정비', 3, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(105, '변동비', 4, 'dowonyale', now());
+
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(106, 'ADHD아동 체크리스트', 1, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(106, '소아불안 체크리스트', 2, 'dowonyale', now());
+insert into t_com_cd (high_cd_id, cd_name, order_no, in_user, in_date)values(106, '학습/반항성/따돌림 체크리스트', 3, 'dowonyale', now());

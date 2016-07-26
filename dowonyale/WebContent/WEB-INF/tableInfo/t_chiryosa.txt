@@ -1,0 +1,37 @@
+drop table t_chiryosa;
+
+  CREATE TABLE `t_chiryosa` (                                                 
+   `chiryosa_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '번호',
+   `user_id` varchar(50) NOT NULL COMMENT '아이디',
+   `chiryosa_carr` varchar(300) DEFAULT NULL COMMENT '치료사경력',              
+   `order_no` int(3) DEFAULT 1 COMMENT '정렬순서',               
+   `del_yn` char(1) DEFAULT 'N',                                          
+   `in_date` datetime DEFAULT NULL,                                       
+   `in_user` varchar(50) DEFAULT NULL,                                        
+   `up_date` datetime DEFAULT NULL,                                       
+   `up_user` varchar(50) DEFAULT NULL,                                        
+   PRIMARY KEY (`chiryosa_id`)                                               
+ ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;           
+ 
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('kimem', '대구대 재활과학대학원 놀이치료전공', 1, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('kimem', '놀이상담심리사 2급', 2, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('kimem', '중등학교 2급 정교사', 3, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('kimem', '한국 아동심리재활학회 정회원', 4, NOW(), 'dowonyale');
+ 
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('jangmy ', '대구대 언어치료학과졸업', 1, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('jangmy ', '대구대 언어임상실 언어치료사', 2, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('jangmy ', '언어치료사 2급', 3, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('jangmy ', '특수중등정교사 2급', 4, NOW(), 'dowonyale');
+ 
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('junuk', '대구대 일반대학원 재활심리전공', 1, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('junuk', '(전)대구대 재활심리학과 강사', 2, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('junuk', '부모아동상호작용 놀이치료강사', 3, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('junuk', '놀이상담심리사 2급', 4, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('junuk', '임상심리사2급 청소년상담사2급', 5, NOW(), 'dowonyale');
+ 
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('juhk', '대불대 언어치료청각학과 졸업', 1, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('juhk', '울산 장애인 종합복지관 근무', 2, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('juhk', '파크사이드 재활의학병원 근무', 3, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('juhk', '언어치료사 2급', 4, NOW(), 'dowonyale');
+ insert into t_chiryosa (user_id, chiryosa_carr, order_no, in_date, in_user) values ('juhk', '청능사 / MBPA유아체육전문교사 2급', 5, NOW(), 'dowonyale');
+ 

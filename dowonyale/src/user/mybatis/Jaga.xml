@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jaga">
+
+
+<select id="jaga_adhd" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	Jaga.jindanList 진단 문항 리스트*/
+	select 	
+		jindan_id, 
+		jindan_quest_no, 
+		jindan_sub_quest_no, 
+		jindan_gbn, 
+		(select cd_name from t_com_cd where cd_id = jindan_gbn) as jindan_gbn_name, 
+		jindan_txt
+		from t_jindan c
+	where del_yn = 'N'
+	AND jindan_gbn = #{jindan_gbn}
+	ORDER BY jindan_quest_no, jindan_sub_quest_no
+</select>
+
+<select id="getAns_num" resultType="java.lang.String" parameterType="common.vo.JindanVo">
+/*	Jaga.getAns_num 차수*/
+	select 	
+		IFNULL( max(ans_num), 0) + 1
+	from t_jindan_ans
+	where 1=1
+	AND jindan_gbn = #{jindan_gbn}
+	and user_id = #{in_user}
+</select>
+
+<insert id="jaga_adhdInsert" parameterType="common.vo.JindanVo">
+insert into t_jindan_ans( 
+		jindan_gbn, 
+		user_id, 
+		jindan_quest_no, 
+		ans_num, 
+		ans_val, 
+		in_date, 
+		in_user
+	)
+	values
+	(
+		trim(#{jindan_gbn}), 
+		trim(#{in_user}), 
+		trim(#{jindan_quest_no}), 
+		trim(#{ans_num}), 
+		trim(#{ans_val}), 
+		NOW(),
+		trim(#{in_user})
+	)
+</insert>
+
+<select id="jaga_adhdInsert_result" resultType="Integer" parameterType="common.vo.JindanVo">
+/*	Jaga.jaga_adhdInsert_result 진단결과 점수*/
+	select 	sum(
+		case ans_val 
+			when '3' then 1
+			when '4' then 1
+			else 0
+		end
+		) as ans_num_sum	
+	from t_jindan_ans
+	where del_yn = 'N'
+	AND jindan_gbn = #{jindan_gbn}
+	and user_id = #{in_user}
+	and ans_num = #{ans_num}
+</select>
+
+<select id="jaga_soaInsert_result" resultType="Integer" parameterType="common.vo.JindanVo">
+/*	Jaga.jaga_soaInsert_result 진단결과 점수*/
+	select 	sum(ans_val) as ans_num_sum	
+	from t_jindan_ans
+	where del_yn = 'N'
+	AND jindan_gbn = #{jindan_gbn}
+	and user_id = #{in_user}
+	and ans_num = #{ans_num}
+</select>
+
+<select id="jaga_hakseubInsert_result" resultType="Integer" parameterType="common.vo.JindanVo">
+/*	Jaga.jaga_soaInsert_result 진단결과 점수*/
+	select 	sum(ans_val -1 ) as ans_num_sum	
+	from t_jindan_ans
+	where del_yn = 'N'
+	AND jindan_gbn = #{jindan_gbn}
+	and user_id = #{in_user}
+	and ans_num = #{ans_num}
+</select>
+
+</mapper>

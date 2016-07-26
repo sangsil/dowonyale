@@ -1,0 +1,24 @@
+drop table t_suyeop;
+
+CREATE TABLE `t_suyeop` (                                                           
+          `suyeop_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '수업아이디',
+          `suyeop_month` varchar(10) NOT NULL COMMENT '수업월',
+          `gwamok` int(10) NOT NULL COMMENT '과목	101',
+          `user_id` varchar(50) NOT NULL COMMENT '담당자',
+          `singyu` int(10) NOT NULL COMMENT '신규/종료	102',
+          `suyeop_gubun` int(10) NOT NULL COMMENT '수업구분	103',
+          `adong_id` int(10) NOT NULL COMMENT '아동 t_adong',
+          `suyeop_cnt` int(3) NOT NULL COMMENT '수업횟수',
+          `napip_gbn` varchar(10) NOT NULL COMMENT '납입구분	104',
+          `napip_date` varchar(10) DEFAULT NULL COMMENT '납입일',
+          `napip_amt` int(10) NOT NULL COMMENT '납입금액',
+          `voucher_amt` int(10) DEFAULT 0 COMMENT '바우처지원금액',
+          `suyeopPyeongga` text DEFAULT NULL COMMENT '수업평가',
+          `del_yn` char(1) DEFAULT 'N',
+          `in_date` datetime DEFAULT NULL,                                                
+          `in_user` varchar(50) DEFAULT NULL,                                                
+          `up_date` datetime DEFAULT NULL,                                                
+          `up_user` varchar(50) DEFAULT NULL,                                                
+          PRIMARY KEY (`suyeop_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        

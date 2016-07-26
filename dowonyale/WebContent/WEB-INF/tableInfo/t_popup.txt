@@ -1,0 +1,25 @@
+drop table t_popup;
+
+
+
+CREATE TABLE `t_popup` (                                                           
+           `popup_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '팝업 아이디',  
+           `popup_gbn` int(3) DEFAULT 1 COMMENT '팝업구분 1:메인',               
+           `popup_title` varchar(300) DEFAULT NULL COMMENT '제목',              
+           `popup_txt` text DEFAULT NULL COMMENT '내용',      
+           `popup_width` int(5) DEFAULT null COMMENT '팝업넓이',
+           `popup_height` int(5) DEFAULT null COMMENT '팝업높이',
+           `popup_top` int(5) DEFAULT null COMMENT '팝업위치',
+           `popup_left` int(5) DEFAULT null COMMENT '팝업위치',
+           `from_date` varchar(10) DEFAULT NULL COMMENT '시작일자',
+           `to_date` varchar(10) DEFAULT NULL COMMENT '종료일자',    
+           `hit_cnt` int(10) DEFAULT 0,         
+           `del_yn` char(1) DEFAULT 'Y',                                          
+           `in_date` datetime DEFAULT NULL,                                       
+           `in_user` varchar(50) DEFAULT NULL,                                        
+           `up_date` datetime DEFAULT NULL,                                       
+           `up_user` varchar(50) DEFAULT NULL,        
+          PRIMARY KEY (`popup_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+

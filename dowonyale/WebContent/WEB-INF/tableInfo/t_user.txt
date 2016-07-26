@@ -1,0 +1,44 @@
+drop table t_user;
+
+
+
+CREATE TABLE `t_user` (                                                           
+          `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '유니크아이디',  
+          `user_id` varchar(50) NOT NULL COMMENT '아이디',                             
+          `user_pw` varchar(50) DEFAULT NULL,                                             
+          `user_name` varchar(50) DEFAULT NULL,                                           
+          `email1` varchar(50) DEFAULT NULL,                                              
+          `email2` varchar(50) DEFAULT NULL,                                              
+          `phone1` varchar(3) DEFAULT NULL,                                             
+          `phone2` varchar(4) DEFAULT NULL,                                             
+          `phone3` varchar(4) DEFAULT NULL,                                             
+          `child_name` varchar(50) DEFAULT NULL,  
+          `del_yn` char(1) DEFAULT 'N',                                                   
+          `user_type` char(1) DEFAULT 'U'      COMMENT 'U:회원 T:선생님 A:전체관리자',                                                 
+          `login_cnt` int(10) DEFAULT 0,
+          `login_date` datetime DEFAULT NULL,                                                
+          `in_date` datetime DEFAULT NULL,                                                
+          `in_user` varchar(50) DEFAULT NULL,                                                
+          `up_date` datetime DEFAULT NULL,                                                
+          `up_user` varchar(50) DEFAULT NULL,                                                
+          `zip_code` varchar(7) DEFAULT NULL,                                                  
+          `addr1` varchar(100) DEFAULT NULL,                                              
+          `addr2` varchar(100) DEFAULT NULL,
+          `tel1` varchar(3) DEFAULT NULL,                                             
+          `tel2` varchar(4) DEFAULT NULL,                                             
+          `tel3` varchar(4) DEFAULT NULL,         
+          `user_job` varchar(100) DEFAULT NULL,         
+          PRIMARY KEY (`id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+        
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('dowonyale','siro9866','도원예일', 'A', now());
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('1','1','김티처', 'T', now());
+
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('kimem','1','김티처', 'T', now());
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('jangmy','1','김티처', 'T', now());
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('junuk','1','김티처', 'T', now());
+insert into t_user(user_id,user_pw,user_name,user_type, in_date) values('juhk','1','김티처', 'T', now());
+
+
+

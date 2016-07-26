@@ -1,0 +1,24 @@
+drop table t_biyong;
+
+CREATE TABLE `t_biyong` (                                                           
+          `biyong_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '비용아이디',
+          `user_id` int(10) NOT NULL COMMENT '선생님',
+          `biyong_session` int(10) DEFAULT 0 COMMENT '세션비용',
+          `biyong_group` int(10) DEFAULT 0 COMMENT '그룹비용',
+          `biyong_sangdam` int(10) DEFAULT 0 COMMENT '상담비용',
+          `biyong_food` int(10) DEFAULT 0 COMMENT '식대비용',
+          `biyong_sogyeonseo` int(10) DEFAULT 0 COMMENT '소견서비용',
+          `biyong_geongang` int(10) DEFAULT 0 COMMENT '건강보험비용',
+          `biyong_gukmin` int(10) DEFAULT 0 COMMENT '국민연금비용',
+          `biyong_goyong` int(10) DEFAULT 0 COMMENT '고용보험비용',
+          `biyong_sanjea` int(10) DEFAULT 0 COMMENT '산재보험비용',
+          `biyong_toijik` int(10) DEFAULT 0 COMMENT '퇴직금비용',
+          `biyong_etc_txt` text DEFAULT NULL COMMENT '기타비용내용',
+          `biyong_etc` int(10) DEFAULT 0 COMMENT '기타비용',
+          `del_yn` char(1) DEFAULT 'N',
+          `in_date` datetime DEFAULT NULL,                                                
+          `in_user` varchar(50) DEFAULT NULL,                                                
+          `up_date` datetime DEFAULT NULL,                                                
+          `up_user` varchar(50) DEFAULT NULL,                                                
+          PRIMARY KEY (`biyong_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

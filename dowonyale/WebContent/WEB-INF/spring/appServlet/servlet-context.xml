@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory 
+	<resources mapping="/resources/**" location="/resources/" />-->
+	<default-servlet-handler/>
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="/" />
+	
+	<!-- properties.xml -->
+	<util:properties id="config" location="/WEB-INF/spring/appServlet/properties.xml"></util:properties>
+	
+	<!-- File upload -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="100000000" />
+        <beans:property name="maxInMemorySize" value="100000000" />
+    </beans:bean>
+	
+	<!-- AJAX -->
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<beans:property name="messageConverters">
+			<beans:list>
+				<beans:ref bean="jsonConverter" />
+				<!-- <ref bean="marshallingConverter" /> <ref bean="atomConverter" /> -->
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="jsonConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<beans:property name="supportedMediaTypes" value="application/json" />
+	</beans:bean>
+	
+    <interceptors>
+    
+	        <beans:bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+		        <beans:property name="cacheSeconds" value="0" />
+		        <beans:property name="useExpiresHeader" value="true" />
+		        <beans:property name="useCacheControlHeader" value="true" />
+		        <beans:property name="useCacheControlNoStore" value="true" />
+	    	</beans:bean>
+    	
+    	    
+    	<!-- 모든 URL 체크 -->
+        <interceptor>  
+            <mapping path="/**"/>
+            <beans:bean class="common.controller.ComAuthCheckInterceptor" />
+        </interceptor>
+        
+    	<!-- 전체관리자 -->
+        <interceptor>  
+        	<!-- s:menu1 -->
+            <mapping path="/admin/user*"/>  
+        	<!-- e:menu1 -->
+        	
+        	<!-- s:menu2 -->
+            <mapping path="/admin/jindanList.dowon"/>  
+            <mapping path="/admin/jindanAnsList.dowon"/>  
+        	<!-- e:menu2 -->
+        	
+        	<!-- s:menu5 -->
+            <mapping path="/admin/comcdList.dowon"/>
+            <mapping path="/admin/popupList.dowon"/>  
+            <mapping path="/admin/suyeopryoList.dowon"/>  
+            <mapping path="/admin/voucherList.dowon"/>
+            <mapping path="/admin/chiryosaList.dowon"/>  
+            <mapping path="/admin/biyongList.dowon"/>
+        	<!-- e:menu5 -->
+            
+            <!-- e:menu7 -->
+            <mapping path="/admin/logList.dowon"/>
+            <mapping path="/admin/logAllGraph.dowon"/>
+            <mapping path="/admin/logMonthGraph.dowon"/>
+            <!-- e:menu7 -->
+            
+            <beans:bean class="common.controller.AdminAuthCheckInterceptor" />
+        </interceptor>
+        
+    	<!-- 전체관리자, 선생님 -->
+        <interceptor>  
+        	<!-- s:menu3 -->
+            <mapping path="/admin/jindanAnsList.dowon"/>  
+            <mapping path="/admin/gongjiList.dowon"/>  
+            <mapping path="/admin/gyoukList.dowon"/>  
+            <mapping path="/admin/onlineList.dowon"/>  
+            <mapping path="/admin/jayuList.dowon"/>  
+        	<!-- e:menu3 -->
+            
+        	<!-- s:menu4 -->
+            <mapping path="/admin/adongList.dowon"/>  
+            <mapping path="/admin/suyeopList.dowon"/>  
+        	<!-- e:menu4 -->
+
+            <beans:bean class="common.controller.AdminAuthCheckInterceptor2" />
+        </interceptor>
+        
+        <!-- 사용자 -->  
+        <interceptor>
+        	<!-- 진단 -->
+            <mapping path="/user/jaga_adhdInsert.dowon"/>
+            <mapping path="/user/jaga_soaInsert.dowon"/>
+            <mapping path="/user/jaga_hakseubInsert.dowon"/>
+        	<!-- 자유게시판 등록수정삭제 -->
+            <mapping path="/user/keomu_online_inUpForm.dowon"/>
+            <mapping path="/user/keomu_online_insert.dowon"/>
+            <mapping path="/user/keomu_online_update.dowon"/>
+            <mapping path="/user/keomu_online_delete.dowon"/>
+            <mapping path="/user/keomu_jayu_inUpForm.dowon"/>
+            <mapping path="/user/keomu_jayu_insert.dowon"/>
+            <mapping path="/user/keomu_jayu_update.dowon"/>
+            <mapping path="/user/keomu_jayu_delete.dowon"/>
+            <beans:bean class="common.controller.UserAuthCheckInterceptor" />
+        </interceptor>  
+    </interceptors>  
+	
+</beans:beans>

@@ -1,0 +1,25 @@
+drop table t_adong;
+
+CREATE TABLE `t_adong` (                                                           
+          `adong_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '아동아이디',            
+          `adong_name` varchar(50) NOT NULL COMMENT '아동명',                     
+          `parent_name` varchar(50) DEFAULT NULL,
+          `adong_sex`	varchar(1) DEFAULT '1' COMMENT '성별',
+          `adong_birth` varchar(10) DEFAULT NULL,
+          `end_date` varchar(10) DEFAULT 0 COMMENT '종료일',
+          `voucher_id` int(10) DEFAULT NULL COMMENT '바우처아이디',
+          `zip_code` varchar(7) DEFAULT NULL,                                                  
+          `addr1` varchar(100) DEFAULT NULL,                                              
+          `addr2` varchar(100) DEFAULT NULL,
+          `phone1` varchar(3) DEFAULT NULL,                                             
+          `phone2` varchar(4) DEFAULT NULL,                                             
+          `phone3` varchar(4) DEFAULT NULL,
+          `del_yn` char(1) DEFAULT 'N',
+          `adongPyeongga` text DEFAULT NULL COMMENT '아동평가',
+          `in_date` datetime DEFAULT NULL,                                                
+          `in_user` varchar(50) DEFAULT NULL,                                                
+          `up_date` datetime DEFAULT NULL,                                                
+          `up_user` varchar(50) DEFAULT NULL,                                                
+          PRIMARY KEY (`adong_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminComcd">
+
+<select id="comcdList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminComcd.comcdList_allCnt	코드관리 총카운트*/
+	SELECT 
+		COUNT(cd_id) AS total
+	FROM
+		t_com_cd
+</select>
+
+<select id="comcdList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminComcd.comcdList_totalCnt	코드관리 카운트*/
+	SELECT 
+		COUNT(cd_id) AS total
+	FROM
+		t_com_cd
+	where 1=1	
+	and high_cd_id = 0
+	<if test="search_value != null and search_value !=''">
+		AND cd_name LIKE '%${search_value}%'
+	</if>
+</select>
+
+<select id="comcdList" resultType="common.vo.ComcdVo" parameterType="common.vo.SearchVo">
+	/*	AdminComcd.comcdList	코드관리 리스트*/
+	select 	
+		cd_id, 
+		high_cd_id, 
+		cd_name, 
+		order_no, 
+		del_yn, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_com_cd c
+	where 1=1
+		and high_cd_id = 0
+	<if test="search_value != null and search_value !=''">
+		AND cd_name LIKE '%${search_value}%'
+	</if>
+	ORDER BY del_yn, order_no, cd_id
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="comcdList_back" resultType="common.vo.ComcdVo" parameterType="common.vo.SearchVo">
+	/*	AdminComcd.comcdList	코드관리 리스트*/
+	SELECT     
+	    CD_ID, 
+	    HIGH_CD_ID, 
+	    IF(HIGH_CD_ID = 0, CD_ID, HIGH_CD_ID) HIGH_CD_ID2,
+	    CD_NAME,
+	    DEL_YN
+	FROM T_COM_CD 
+	WHERE DEL_YN = 'N'
+	AND HIGH_CD_ID = '0'
+	UNION ALL
+	SELECT 
+	    G.CD_ID, 
+	    G.HIGH_CD_ID,
+	    IF(G.HIGH_CD_ID = 0, G.CD_ID, G.HIGH_CD_ID) HIGH_CD_ID2,
+	    G.CD_NAME,
+	    G.DEL_YN
+	FROM T_COM_CD AS F
+	INNER JOIN T_COM_CD AS G 
+	ON G.HIGH_CD_ID = F.CD_ID 
+	<if test="search_value != null and search_value !=''">
+		AND cd_name LIKE '%${search_value}%'
+	</if>
+	ORDER BY HIGH_CD_ID2, HIGH_CD_ID, CD_ID
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<insert id="comcdInsert" parameterType="common.vo.ComcdVo">
+/*	AdminComcd.comcdInsert	코드관리 등록*/
+	insert into t_com_cd 
+		( 
+		<if test="high_cd_id != null and high_cd_id != ''">
+		high_cd_id,
+		</if>
+		cd_name, 
+		order_no, 
+		in_user,
+		in_date 
+		)
+		values
+		(
+			<if test="high_cd_id != null and high_cd_id != ''">
+			trim(#{high_cd_id}),
+			</if>
+			trim(#{cd_name}), 
+			trim(#{order_no}), 
+			#{in_user}, 
+			NOW()
+		)
+</insert>
+
+<update id="comcdUpdate" parameterType="common.vo.ComcdVo">
+/*	AdminComcd.comcdUpdate	코드관리 수정	*/
+	update t_com_cd 
+	set
+		cd_name 	= trim(#{cd_name}),
+		order_no	= #{order_no},
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where cd_id = #{cd_id}
+</update>
+
+<update id="comcdDelete" parameterType="common.vo.ComcdVo">
+/*	AdminComcd.comcdDelete	코드관리 삭제	*/
+	update t_com_cd 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where cd_id = #{cd_id}
+</update>
+
+<update id="comcdDeleteCancel" parameterType="common.vo.ComcdVo">
+/*	AdminComcd.comcdDeleteCancel	코드관리 삭제취소	*/
+	update t_com_cd 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where cd_id = #{cd_id}
+</update>
+
+
+
+
+
+<select id="comcdDetailTotalCnt" resultType="Integer" parameterType="java.lang.String">
+	/*	AdminComcd.comcdDetailTotalCnt	코드관리 하위코드 카운트*/
+	SELECT 
+		COUNT(cd_id) AS total
+	FROM
+		t_com_cd
+	where 1=1	
+	and high_cd_id = #{cd_id}
+</select>
+
+<select id="comcdDetail" resultType="common.vo.ComcdVo" parameterType="java.lang.String">
+	/*	AdminComcd.comcdDetail	코드관리 상세*/
+	select 	
+		cd_id, 
+		high_cd_id, 
+		cd_name, 
+		order_no, 
+		del_yn, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_com_cd c
+	where 1=1
+		and cd_id = #{cd_id}
+</select>
+
+<select id="comcdDetailList" resultType="common.vo.ComcdVo" parameterType="java.lang.String">
+	/*	AdminComcd.comcdDetailList	코드관리 하위코드 리스트*/
+	select 	
+		cd_id, 
+		high_cd_id, 
+		cd_name, 
+		order_no, 
+		del_yn, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_com_cd c
+	where 1=1
+		and high_cd_id = #{cd_id}
+	ORDER BY del_yn, order_no, cd_id
+</select>
+
+
+
+
+
+
+</mapper>

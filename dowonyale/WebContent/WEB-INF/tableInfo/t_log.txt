@@ -1,0 +1,15 @@
+drop table t_log_2016;
+
+
+
+CREATE TABLE `t_log_2016` (                                                           
+          `log_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '유니크아이디',  
+          `log_url` varchar(100) DEFAULT NULL,                                             
+          `device_gbn` varchar(10) DEFAULT NULL,
+          `mobile_yn` char(1) DEFAULT 'N',
+          `in_ip` varchar(20) DEFAULT NULL,
+          `in_user` varchar(20) DEFAULT NULL,                   
+          `in_date` datetime DEFAULT NULL,
+          PRIMARY KEY (`log_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        

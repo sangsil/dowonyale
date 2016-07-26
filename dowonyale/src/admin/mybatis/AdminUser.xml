@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminUser">
+
+<select id="userList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(id) AS total
+	FROM
+		t_user
+</select>
+
+<select id="com_cd_list" resultType="common.vo.ComcdVo" parameterType="java.lang.String">
+	SELECT 
+		cd_id, 
+		high_cd_id, 
+		cd_name, 
+		order_no, 
+		del_yn
+	FROM
+		t_com_cd
+	WHERE del_yn = 'N'
+	AND high_cd_id = #{high_cd_id}	
+	ORDER BY cd_id
+</select>
+
+<select id="com_cd_list_desc" resultType="common.vo.ComcdVo" parameterType="java.lang.String">
+	SELECT 
+		cd_id, 
+		high_cd_id, 
+		cd_name, 
+		order_no, 
+		del_yn
+	FROM
+		t_com_cd
+	WHERE del_yn = 'N'
+	AND high_cd_id = #{high_cd_id}
+	ORDER BY cd_id DESC
+</select>
+
+<select id="com_teacher_list" resultType="common.vo.UserVo">
+/*	AdminUser.com_teacherList	선생님 리스트	*/
+	select 	
+		user_id, 
+		user_name,
+		user_job
+	from t_user
+	where del_yn = 'N'
+	and user_type= 'T'
+	ORDER BY user_name
+</select>
+
+<select id="com_adong_list" resultType="common.vo.AdongVo">
+	/*	AdminUser.com_adongList	아동관리 리스트*/
+	select 	
+		adong_id, 
+		adong_name, 
+		parent_name, 
+		adong_birth, 
+		adong_sex,
+		end_date, 
+		ifnull((select voucher_id from t_voucher where voucher_id = c.voucher_id and del_yn = 'N'), 0) as voucher_id,
+		zip_code,
+		addr1, 
+		addr2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_adong c
+	where del_yn = 'N'
+	ORDER BY adong_name
+</select>
+
+<select id="userList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(id) AS total
+	FROM
+		t_user
+	where 1=1	
+		<if test="search_value != null and search_value !=''">
+		AND (user_id LIKE '%${search_value}%' or user_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')
+<!-- 			<if test="search_type.equals('all')">AND (user_id LIKE '%${search_value}%' or user_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if>    			    			   		 -->
+<!-- 			<if test="search_type.equals('user_id')">AND user_id LIKE '%${search_value}%'</if>    			    			   		 -->
+<!-- 			<if test="search_type.equals('user_name')">AND user_name LIKE '%${search_value}%'</if> -->
+<!-- 			<if test="search_type.equals('email')">AND (email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if> -->
+		</if>
+</select>
+
+<select id="userList" resultType="common.vo.UserVo" parameterType="common.vo.SearchVo">
+	select 	
+		id, 
+		user_id, 
+		user_pw, 
+		user_name, 
+		email1, 
+		email2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		child_name, 
+		del_yn, 
+		user_type, 
+		login_cnt,
+		login_date, 
+		in_date, 
+		in_user, 
+		up_date, 
+		up_user, 
+		zip_code, 
+		addr1, 
+		addr2, 
+		tel1, 
+		tel2, 
+		tel3,
+		user_job,
+		order_no
+		from t_user
+	where 1=1
+	<if test="search_value != null and search_value !=''">
+		AND (user_id LIKE '%${search_value}%' or user_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')
+<!-- 		<if test="search_type.equals('all')">AND (user_id LIKE '%${search_value}%' or user_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if>    			    			   		 -->
+<!-- 		<if test="search_type.equals('user_id')">AND user_id LIKE '%${search_value}%'</if>    			    			   		 -->
+<!-- 		<if test="search_type.equals('user_name')">AND user_name LIKE '%${search_value}%'</if> -->
+<!-- 		<if test="search_type.equals('email')">AND (email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if> -->
+	</if>
+	ORDER BY del_yn, id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="userDuplChk" resultType="Integer" parameterType="common.vo.UserVo">
+	select 	
+		count(id) as result
+	from t_user
+	where upper(user_id) = upper(trim(#{user_id}))
+</select>
+
+<select id="userEmailDuplChk" resultType="Integer" parameterType="common.vo.UserVo">
+	select 	
+		count(id) as result
+	from t_user
+	where upper(email1) = upper(trim(#{email1}))
+	and upper(email2) = upper(trim(#{email2}))
+	<if test="user_id != null and user_id !=''">
+		AND user_id != #{user_id}
+	</if>
+</select>
+
+<insert id="userInsert" parameterType="common.vo.UserVo">
+	insert into t_user 
+		( 
+			user_id, 
+			user_pw, 
+			user_name, 
+			email1, 
+			email2, 
+			phone1, 
+			phone2, 
+			phone3, 
+			child_name, 
+			user_type, 
+			in_date, 
+			in_user, 
+			zip_code, 
+			addr1, 
+			addr2, 
+			tel1, 
+			tel2, 
+			tel3,
+			user_job,
+			order_no
+		)
+		values
+		(
+			trim(#{user_id}), 
+			trim(#{user_pw}), 
+			trim(#{user_name}), 
+			trim(#{email1}), 
+			trim(#{email2}), 
+			#{phone1}, 
+			trim(#{phone2}), 
+			trim(#{phone3}), 
+			trim(#{child_name}), 
+			#{user_type}, 
+			NOW(), 
+			#{in_user}, 
+			#{zip_code}, 
+			#{addr1}, 
+			trim(#{addr2}), 
+			trim(#{tel1}), 
+			trim(#{tel2}), 
+			trim(#{tel3}),
+			trim(#{user_job}),
+			trim(#{order_no})
+		)
+</insert>
+
+<update id="userUpdate" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		user_pw 	= trim(#{user_pw}),
+		user_name 	= trim(#{user_name}),
+		email1 		= trim(#{email1}),
+		email2 		= trim(#{email2}),
+		phone1 		= #{phone1},
+		phone2 		= trim(#{phone2}),
+		phone3 		= trim(#{phone3}),
+		child_name 	= trim(#{child_name}),
+		user_type 	= #{user_type},
+		up_date 	= NOW() , 
+		up_user 	= #{up_user},
+		zip_code 	= trim(#{zip_code}),
+		addr1 		= trim(#{addr1}),
+		addr2 		= trim(#{addr2}),
+		tel1 		= trim(#{tel1}),
+		tel2 		= trim(#{tel2}),
+		tel3 		= trim(#{tel3}),
+		user_job 	= trim(#{user_job}),
+		order_no 	= trim(#{order_no})
+	where user_id = #{user_id}
+</update>
+
+<update id="userDelete" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where user_id = #{user_id}
+</update>
+
+<update id="userDeleteCancel" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where user_id = #{user_id}
+</update>
+
+</mapper>

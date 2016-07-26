@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminAdong">
+
+<select id="adongList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminAdong.adongList_allCnt	아동관리 총카운트*/
+	SELECT 
+		COUNT(id) AS total
+	FROM
+		t_adong
+</select>
+
+<select id="adongList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminAdong.adongList_totalCnt	아동관리 카운트*/
+	SELECT 
+		COUNT(adong_id) AS total
+	FROM
+		t_adong
+	where 1=1	
+	<if test="search_value != null and search_value !=''">
+		AND (adong_name LIKE '%${search_value}%' or parent_name LIKE '%${search_value}%')
+	</if>
+</select>
+
+<select id="adongList" resultType="common.vo.AdongVo" parameterType="common.vo.SearchVo">
+	/*	AdminAdong.adongList	아동관리 리스트*/
+	select 	
+		adong_id, 
+		adong_name, 
+		parent_name, 
+		adong_birth, 
+		adong_sex,
+		end_date, 
+		ifnull((select voucher_id from t_voucher where voucher_id = c.voucher_id and del_yn = 'N'), 0) as voucher_id,
+		zip_code,
+		addr1, 
+		addr2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		adongPyeongga, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_adong c
+	where 1=1
+	<if test="search_value != null and search_value !=''">
+		AND (adong_name LIKE '%${search_value}%' or parent_name LIKE '%${search_value}%')
+	</if>
+	ORDER BY del_yn, adong_name
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<insert id="adongInsert" parameterType="common.vo.AdongVo">
+/*	AdminAdong.adongInsert	아동관리 등록*/
+	insert into t_adong 
+		( 
+		adong_name, 
+		parent_name, 
+		adong_birth,
+		adong_sex, 
+		end_date, 
+		voucher_id,
+		zip_code, 
+		addr1, 
+		addr2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		adongPyeongga, 
+		in_user,
+		in_date 
+		)
+		values
+		(
+			trim(#{adong_name}), 
+			trim(#{parent_name}), 
+			trim(#{adong_birth}), 
+			trim(#{adong_sex}), 
+			trim(#{end_date}), 
+			trim(#{voucher_id}), 
+			trim(#{zip_code}), 
+			trim(#{addr1}), 
+			trim(#{addr2}), 
+			trim(#{phone1}), 
+			trim(#{phone2}), 
+			trim(#{phone3}),
+			trim(#{adongPyeongga}),
+			#{in_user}, 
+			NOW()
+		)
+</insert>
+
+<update id="adongUpdate" parameterType="common.vo.AdongVo">
+/*	AdminAdong.adongUpdate	아동관리 수정	*/
+	update t_adong 
+	set
+		adong_name 	= trim(#{adong_name}),
+		parent_name = trim(#{parent_name}),
+		adong_birth	= #{adong_birth},
+		adong_sex	= #{adong_sex},
+		end_date	= #{end_date},
+		voucher_id	= #{voucher_id},
+		zip_code 	= trim(#{zip_code}),
+		addr1 		= trim(#{addr1}),
+		addr2 		= trim(#{addr2}),
+		phone1 		= trim(#{phone1}),
+		phone2 		= trim(#{phone2}),
+		phone3 		= trim(#{phone3}),
+		adongPyeongga 		= trim(#{adongPyeongga}),
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where adong_id = #{adong_id}
+</update>
+
+<update id="adongDelete" parameterType="common.vo.AdongVo">
+/*	AdminAdong.adongDelete	아동관리 삭제	*/
+	update t_adong 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where adong_id = #{adong_id}
+</update>
+
+<update id="adongDeleteCancel" parameterType="common.vo.AdongVo">
+/*	AdminAdong.adongDeleteCancel	아동관리 삭제취소	*/
+	update t_adong 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where adong_id = #{adong_id}
+</update>
+
+</mapper>

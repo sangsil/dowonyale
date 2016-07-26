@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+.ui-selectmenu-area {
+	position : relative;
+}
+
+.ui-selectmenu-list {
+	list-style          : none;
+	list-style-position : outside;
+	padding             : 0px;
+	margin              : 0px;
+	position            : absolute;
+	overflow-y          : auto;
+	text-align          : left;
+	display             : block;
+	visibility          : hidden;
+}
+
+.ui-selectmenu-list ul {
+	list-style          : none;
+	list-style-position : outside;
+	padding             : 0px;
+	margin              : 0px;
+}
+
+.ui-selectmenu-list li {
+	border : transparent 1px solid;
+}
+
+.ui-selectmenu-list .ui-widget-header {
+
+	padding       : 3px;
+	font-variant  : small-caps;
+	padding-left  : 2px;
+	margin-bottom : 1px;
+
+}
+
+.ui-selectmenu-list li:not(.group) {
+	padding : 3px;
+
+	cursor  : pointer;
+}
+
+.ui-selectmenu-list li.group li {
+	padding-left : 10px;
+}
+

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+<!-- 회원정보 -->
+<select id="select_member_info" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	/* user.select_usr_info */
+    
+	select 
+		account
+		, member_name
+	from member
+	where account = #{account}
+	and rownum = 1
+	
+</select>
+
+<!-- 최신댓글 -->
+<select id="select_event_new_list" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	/* user.select_usr_new_list */
+	
+    select * 
+    from(
+        select 
+            a.event_sn
+            , a.event_gbn
+            , a.account
+            , b.member_name
+            , case 
+                when length(cmnt) > 13 then substr(cmnt, 1, 13)||'...'
+                else cmnt
+              end cmnt
+            , a.recommend
+            , a.reg_dtti
+            , a.del_yn
+        from event_result a, member b
+        where a.event_gbn = #{event_gbn}
+        and a.account = b.account
+        and a.del_yn = 'N'
+        order by a.event_sn desc
+    )
+    where rownum &lt; 5
+	
+<!-- 	LIMIT #{startNum},#{maxRows} -->
+</select>
+
+<!-- 전체 등록수 -->
+<select id="select_all_cnt" resultType="Integer" parameterType="common.vo.UserVo">
+	/* user.select_all_cnt */
+	
+	SELECT 
+		COUNT(event_sn) AS allCnt
+	FROM
+		event_result
+	WHERE event_gbn = #{event_gbn}
+	and	del_yn = 'N'
+</select>
+
+<!-- 추천수 많은 리스트 -->
+<select id="select_event_list_topRecommend" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	/* user.select_event_list_topRecommend */
+
+	select *
+	from(
+	    select 
+	        a.event_sn
+	        , a.event_gbn
+	        , a.account
+	        , b.member_name
+	        , a.cmnt
+	        , a.recommend
+	        , a.reg_dtti
+	        , a.del_yn
+	    from event_result a, member b
+		WHERE a.account = b.account
+	    and a.event_gbn = #{event_gbn}
+		and a.del_yn = 'N'
+		ORDER BY a.recommend DESC, a.event_sn DESC
+	)
+	where rownum &lt; 4	
+	
+</select>
+
+<!-- 전체 리스트 -->
+<select id="select_event_list" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	/* user.select_event_list */
+	
+select *
+from(
+	select rownum page, d.*
+	from(
+        select 
+            a.event_sn
+            , a.event_gbn
+            , a.account
+            , b.member_name
+            , a.cmnt
+            , a.recommend
+            , a.reg_dtti
+            , a.del_yn
+        from event_result a, member b
+        where a.account = b.account
+    	and a.event_gbn = #{event_gbn}
+        and a.del_yn = 'N'
+        order by a.event_sn desc
+	) d
+)
+where page between #{startNum} +1 and #{maxRows} + #{startNum}
+<!-- 	LIMIT #{startNum},#{maxRows} -->
+</select>
+
+<!-- 등록 -->
+<insert id="insert_cmnt" parameterType="common.vo.UserVo">
+	 INSERT INTO event_result
+    (
+    	event_sn
+		, event_gbn
+    	, account 
+		, cmnt
+    	, reg_dtti
+    )
+    VALUES
+    (
+    	(SELECT NVL(MAX(event_sn), 0)+1 FROM event_result)
+    	, #{event_gbn}
+    	, #{account}
+		, #{cmnt}
+	    , to_char(SYSDATE,'yyyyMMddhh24miss')
+    )
+</insert>
+
+<!-- 추천 -->
+<update id="update_recommend" parameterType="common.vo.UserVo">
+		update event_result set recommend = recommend+1
+		WHERE event_sn = #{event_sn}
+</update>
+
+<update id="edit_cmnt" parameterType="common.vo.UserVo">
+	update event_result set cmnt = #{cmnt}
+	WHERE event_sn = #{event_sn}
+</update>
+
+<delete id="delete_cmnt" parameterType="common.vo.UserVo">
+	update event_result set del_yn = 'Y'
+	WHERE event_sn = #{event_sn}
+</delete>
+
+<!-- <delete id="delete_cmnt" parameterType="common.vo.UserVo"> -->
+<!-- 	delete  -->
+<!-- 	FROM -->
+<!-- 		event_result -->
+<!-- 	WHERE event_sn = #{event_sn} -->
+<!-- </delete> -->
+
+</mapper>

@@ -1,0 +1,192 @@
+drop table t_jindan;
+
+  CREATE TABLE `t_jindan` (                                                 
+           `jindan_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '진단아이디',  
+           `jindan_quest_no` int(10) NOT NULL COMMENT '문항 보기번호',  
+           `jindan_sub_quest_no` int(10) DEFAULT 1 COMMENT '문항 보기번호',  
+           `jindan_gbn` int(10) NOT NULL COMMENT '진단구분	106',
+           `jindan_txt` text DEFAULT NULL COMMENT '문항내용',
+           `del_yn` char(1) DEFAULT 'N',                                          
+           `in_date` datetime DEFAULT NULL,                                       
+           `in_user` varchar(50) DEFAULT NULL,                                        
+           `up_date` datetime DEFAULT NULL,                                       
+           `up_user` varchar(50) DEFAULT NULL,                                        
+           PRIMARY KEY (`jindan_id`)                                               
+         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;           
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 1, 1, 1029, '수업 또는 다른 활동을 할 때 부주의해 실수를 많이 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 2, 1, 1029, '과제 또는 놀이를 할 때 지속적으로 주의를 집중하기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 3, 1, 1029, '다른 사람이 앞에서 얘기하는데도 귀를 기울이지 않는 것 같다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 4, 1, 1029, '지시에 따라 숙제, 집안 일 등 자신이 해야 할 일을 마치지 못한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 5, 1, 1029, '과제 또는 활동을 체계적으로 하지 못한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 6, 1, 1029, '정신적 노력이 필요한 일이나 활동을 싫어하고 꺼린다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 7, 1, 1029, '장난감 연필 등을 자주 잃어버린다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 8, 1, 1029, '외부 자극이 생기면 쉽게 산만해진다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 9, 1, 1029, '자신의 물건(예, 도시락)을 두고 학교에 가는 등 자주 잊어버린다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 10, 1, 1029, '가만히 있지 못하고 손발을 계속 움직이거나 몸을 꿈틀거린다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 11, 1, 1029, '수업시간에 여기저기 돌아다닌다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 12, 1, 1029, '상황에 맞지 않게 과도하게 뛰어다니거나 기어오른다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 13, 1, 1029, '조용히 하는 놀이나 오락에 참여하지 못한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 14, 1, 1029, '모터가 달린 것처럼 끊임없이 움직인다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 15, 1, 1029, '말을 너무 많이 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 16, 1, 1029, '질문을 끝까지 듣지 않고 대답한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 17, 1, 1029, '자기 순서를 기다리지 못한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 18, 1, 1029, '다른 사람을 방해하고 간섭한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 1, 1, 1030, '나는 실수하지 않을까 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 2, 1, 1030, '나는 울고싶다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 3, 1, 1030, '나는 불행하다고 느낀다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 4, 1, 1030, '나는 결심하기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 5, 1, 1030, '나는 내 문제에 직접 맞서 다루기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 6, 1, 1030, '나는 걱정이 너무 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 7, 1, 1030, '나는 집에 있으면 마음이 편치 않다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 8, 1, 1030, '나는 부끄러움이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 9, 1, 1030, '나는 고민이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 10, 1, 1030, '쓸데없는 생각이 나를 괴롭힌다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 11, 1, 1030, '나는 학교생활에 대해 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 12, 1, 1030, '나는 무엇을 할까 결정하기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 13, 1, 1030, '내 심장이 빨리 뛰는 것을 느낀다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 14, 1, 1030, '나는 남이 모르는 두려움이 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 15, 1, 1030, '내 부모님들에 대해 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 16, 1, 1030, '내 손이 땀에 젖는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 17, 1, 1030, '나는 앞으로 일어날지도 모르는 일에 대해 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 18, 1, 1030, '나는 밤에 잠들기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 19, 1, 1030, '나는 뱃속에 이상한 느낌이 들 때가 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 20, 1, 1030, '나는 남들이 나를 어떻게 생각할지 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 1, 1, 1031, '나는 가끔 슬프다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 1, 2, 1031, '나는 자주 슬프다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 1, 3, 1031, '나는 항상 슬프다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 2, 1, 1031, '나에겐 모든 일이 제대로 되어 갈 것이다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 2, 2, 1031, '나에게 제대로 되어 가는 일이란 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 2, 3, 1031, '나는 일이 제대로 되어갈지 확신할 수 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 3, 1, 1031, '나는 대체로 무슨 일이던지 웬만큼 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 3, 2, 1031, '나는 잘못하는 일이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 3, 3, 1031, '나는 모든 일을 잘못한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 4, 1, 1031, '나는 재미있는 일들이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 4, 2, 1031, '나는 재미있는 일들이 더러 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 4, 3, 1031, '나는 어떤 일도 전혀 재미가 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 5, 1, 1031, '나는 가끔 못 됐다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 5, 2, 1031, '나는 못됐을 때 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 5, 3, 1031, '나는 언제나 못됐다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 6, 1, 1031, '나는 가끔씩 나에게 나쁜 일이 일어나지 않을까 생각한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 6, 2, 1031, '나는 나에게 나쁜 일이 일어날까 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 6, 3, 1031, '나는 나에게 무서운 일이 일어나리 라는 것을 확신한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 7, 1, 1031, '나는 나 자신을 좋아한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 7, 2, 1031, '나는 나 자신을 좋아하지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 7, 3, 1031, '나는 나 자신을 미워한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 8, 1, 1031, '잘못되는 일은 보통 내 탓이 아니다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 8, 2, 1031, '잘못된 일 중 내 탓인 것이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 8, 3, 1031, '잘못된 일은 모두 내 탓이다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 9, 1, 1031, '나는 자살을 생각하지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 9, 2, 1031, '나는 자살에 대하여 생각은 하지만, 그렇게 하지는 않을 것이다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 9, 3, 1031, '나는 자살하고 싶다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 10, 1, 1031, '나는 때때로 울고 싶은 기분이 든다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 10, 2, 1031, '나는 울고 싶은 기분인 날도 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 10, 3, 1031, '나는 매일 울고 싶은 기분이다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 11, 1, 1031, '간혹 이 일 저 일로 해서 성가실  때가 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 11, 2, 1031, '이 일 저 일로 해서 성가실 때가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 11, 3, 1031, '이 일 저 일로 해서 늘 성가시다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 12, 1, 1031, '나는 사람들과 함께 있는 것이 좋다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 12, 2, 1031, '나는 사람들과 함께 있는 것이 싫 을 때가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 12, 3, 1031, '나는 사람들과 함께 있는 것을  전혀 원치 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 13, 1, 1031, '나는 쉽게 결정을 내린다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 13, 2, 1031, '나는 어떤 일에 대한 결정을 내릴  수가 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 13, 3, 1031, '나는 어떤 일에 대한 결정을 내리 기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 14, 1, 1031, '나는 괜찮게 생겼다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 14, 2, 1031, '나는 못생긴 구석이 약간 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 14, 3, 1031, '나는 못 생겼다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 15, 1, 1031, '나는 별로 어렵지 않게 학교 공부 를 해낼 수 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 15, 2, 1031, '나는 학교 공부를 해 내려면 많이  노력하여야만 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 15, 3, 1031, '나는 학교 공부를 해 내려면 언제 나 노력하여야만 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 16, 1, 1031, '나는 잠을 잘 잔다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 16, 2, 1031, '나는 잠들기 어려운 밤이 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 16, 3, 1031, '나는 매일 밤 잠들기가 어렵다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 17, 1, 1031, '나는 가끔 피곤하다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 17, 2, 1031, '나는 자주 피곤하다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 17, 3, 1031, '나는 언제나 피곤하다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 18, 1, 1031, '나는 밥맛이 좋다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 18, 2, 1031, '나는 밥맛이 없을 때가 대부분이다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 18, 3, 1031, '나는 밥맛이 없을 때가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 19, 1, 1031, '나는 몸이 쑤시고 아프다든지 하는 것에 대해 걱정하지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 19, 2, 1031, '나는 몸이 쑤시고 아픈 것에 대해  걱정할 때가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 19, 3, 1031, '나는 몸이 쑤시고 아픈 것에 대해  항상 걱정한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 20, 1, 1031, '나는 외롭다고 느끼지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 20, 2, 1031, '나는 자주 외롭다고 느낀다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 20, 3, 1031, '나는 항상 외롭다고 느낀다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 21, 1, 1031, '나는 학교 생활이 재미있을 때가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 21, 2, 1031, '나는 가끔씩 학교 생활이 재미있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 21, 3, 1031, '나는 학교 생활이 재미있었던 적이 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 22, 1, 1031, '나는 친구가 많다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 22, 2, 1031, '나는 친구가 좀 있지만 더 있었으 면 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 22, 3, 1031, '나는 친구가 하나도 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 23, 1, 1031, '나의 학교 성적은 괜찮다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 23, 2, 1031, '나의 학교 성적은 예전처럼 좋지는  않다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 23, 3, 1031, '내가 예전에 무척 잘하던 과목에서  요즈음 성적이 뚝 떨어졌다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 24, 1, 1031, '나는 다른 아이들처럼 착하다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 24, 2, 1031, '나는 내가 마음만 먹으면 다른 아이들처럼 착할 수가 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 24, 3, 1031, '나는 절대로 다른 아이들처럼 착할 수가 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 25, 1, 1031, '분명히 나를 진심으로 좋아하는  사람이 있다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 25, 2, 1031, '나를 진심으로 좋아하는 사람이 있을지 확실하지 않다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 25, 3, 1031, '나를 진심으로 좋아하는 사람은 아무도 없다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 26, 1, 1031, '나는 나에게 시킨 일을 대체로 한다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 26, 2, 1031, '나는 나에게 시킨 일을 대체로  하지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 26, 3, 1031, '나는 나에게 시킨 일을 절대로 하지 않는다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 27, 1, 1031, '나는 사람들과 사이좋게 잘 지낸다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 27, 2, 1031, '나는 사람들과 잘 싸운다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+insert into t_jindan ( jindan_quest_no, jindan_sub_quest_no, jindan_gbn, jindan_txt, in_date, in_user, up_date, up_user ) values ( 27, 3, 1031, '나는 사람들과 언제나 싸운다.', NOW(), 'dowonyale', NOW(), 'dowonyale' );
+
+
+
+
+         
+drop table t_jindan_ans;
+
+  CREATE TABLE `t_jindan_ans` (                                                 
+           `jindan_ans_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '답변아이디',
+           `jindan_gbn` int(10) NOT NULL COMMENT '진단구분	106',
+           `user_id` varchar(50) NOT NULL COMMENT '아이디',
+           `jindan_quest_no` int(10) NOT NULL COMMENT '문항 보기번호',  
+           `ans_num` int(3) NOT NULL COMMENT '응시차수',  
+           `ans_val` varchar(300) NOT NULL COMMENT '답변',
+           `del_yn` char(1) DEFAULT 'N',                                          
+           `in_date` datetime DEFAULT NULL,                                       
+           `in_user` varchar(50) DEFAULT NULL,                                        
+           `up_date` datetime DEFAULT NULL,                                       
+           `up_user` varchar(50) DEFAULT NULL,                                        
+           PRIMARY KEY (`jindan_ans_id`)                                               
+         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;     
+         
+         
+         
+         
+         
+
+
+

@@ -1,0 +1,362 @@
+@charset "utf-8";
+
+/* intro_chaja	*/
+#naver_map {
+	position: absolute;
+	width: 130px;
+	height: 30px;
+	margin: 565px 0px 0px 490px;
+}
+
+#daum_map {
+	position: absolute;
+	width: 130px;
+	height: 30px;
+	margin: 565px 0px 0px 640px;
+}
+/* intro_chaja	*/
+
+/* intro_center	*/
+#intro_center_wrap {
+	margin: 70px 0px 0px 0px;
+	width: 777px;
+	height: 333px;
+	overflow: hidden;
+	position: relative;
+}
+#slideConteiner {
+	width: 7770px;
+	position: absolute;
+	-webkit-transition: all 1.0s ease-in-out;
+	-moz-transition: all 1.0s ease-in-out;
+	-o-transition: all 1.0s ease-in-out;
+}
+#slideConteiner img {
+	float: left;
+}
+#slide_icon {
+	float: left;
+	width: 807px;
+	height: 73px;
+	margin: 10px 0px 50px -30px;
+}
+#slide_icon ul,#slide_icon li {
+	list-style: none;
+}
+#center_slideBar li {
+	float: left;
+	width: 64px;
+	height: 73px;
+	margin: -15px 12px 0px 0px;
+}
+/* intro_center	*/
+
+#intro_dowon {
+	background-image: url(../images/sub/02_content_01_01.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	height: 452px;
+	width: 777px;
+}
+
+#intro_intro_wonjang {
+	background-image: url(../images/sub/02_content_01_02.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	height: 534px;
+	width: 777px;
+}
+
+#intro_chiryosa {
+	background-image: url(../images/sub/02_content_01_03.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+}
+.intro_chiryosa {
+	margin: 70px 0px 20px 0px;
+	padding: 0px;
+	width: 777px;
+}
+.intro_chiryosa_carr{
+	margin: 0px 0px 40px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+}
+.chiryosaPic{
+	background-image: url(../images/sub/noImage.png);
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 125px;
+	height: 126px;
+}
+.intro_chiryosa ul{
+	margin: 10px 0px 0px 50px;
+	padding: 0px;
+	font-size: 13pt;
+	font-weight:bold;
+	color:#ab8359;
+	float: left;
+	width:600px;
+}
+.chiryosaFirst{
+	margin: 0px 0px 10px -20px;
+	font-size: 15pt;
+	font-weight:bold;
+	color:#60564b;
+	text-align: left;
+	line-height: 20px;
+	list-style:none;
+}
+
+#intro_center {
+	background-image: url(../images/sub/02_content_01_04.png);
+	background-repeat: no-repeat;
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	height: 33px;
+	width: 156px;
+}
+
+#intro_chaja {
+	background-image: url(../images/sub/02_content_01_05.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	height: 609px;
+	width: 777px;
+}
+
+#chiryo_eoneo {
+	background-image: url(../images/sub/02_content_02_01.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	height: 1004px;
+	width: 777px;
+}
+
+#chiryo_nolyi {
+	background-image: url(../images/sub/02_content_02_02.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	height: 1004px;
+	width: 777px;
+}
+
+#chiryo_inji {
+	background-image: url(../images/sub/02_content_02_03.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:491px;
+}
+
+#chiryo_geurup {
+	background-image: url(../images/sub/02_content_02_04.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:800px;
+}
+
+#chiryo_bumo {
+	background-image: url(../images/sub/02_content_02_05.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:528px;
+}
+
+#sangdam_sigan {
+	background-image: url(../images/sub/02_content_03_01.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:540px;
+}
+
+#sangdam_jeolcha {
+	background-image: url(../images/sub/02_content_03_02.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:582px;
+}
+.jaga_contents{
+	
+}
+#jaga_adhd {
+	background-image: url(../images/sub/02_content_04_01.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	width: 777px;
+	height:32px;
+}
+#jaga_soa {
+	background-image: url(../images/sub/02_content_04_02.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:32px;
+}
+#jaga_hakseub {
+	background-image: url(../images/sub/02_content_04_03.png);
+	background-repeat: no-repeat;
+	margin: 0px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+	height:32px;;
+}
+
+#keomu_gongji, #keomu_gyoyuk, #keomu_online, #keomu_jayu, #keomu_gwanryeon {
+	margin: 35px 0px 70px 0px;
+	padding: 0px;
+	float: left;
+	width: 777px;
+}
+
+/*	공지	*/
+.con_body table{
+	margin:0;
+	padding:0;
+	width:777px;
+	border:0px;
+	color: rgb(122,111,100);
+}
+
+.con_body table thead tr th{
+	height: 30px;
+	text-align: center;
+	border-top:solid 2px rgb(197,122,255);
+	border-bottom:solid 1px rgb(219,173,255);
+}
+
+.con_body table tr td{
+	height: 30px;
+	border-bottom:solid 1px rgb(267,214,255);
+}
+
+.con_body table .detailTableTitle td{
+	height: 30px;
+	border-top:solid 2px rgb(197,122,255);
+	border-bottom:solid 1px rgb(219,173,255);
+}
+
+.detailTableTitle .txtColor{
+	color:rgb(219,173,255);
+}
+.detailTxt{
+	margin : 10px 0px 10px 10px;
+	padding:20px;
+	line-height:25px;
+	width:770px;
+}
+.keomu_table_sub{
+	margin: 10px 0px 0px 0px;
+	padding:  0px 20px;
+	vertical-align:center;
+	color:rgb(219,173,255);
+	font-weight:bold;
+}
+.keomu_table_sub .goList{
+	margin:0px;
+	padding:0px;
+	float:left;
+}
+.keomu_table_sub .goUpForm, .goDelete{
+	margin: 0px 50px 0px 0px;
+	padding:0px;
+	float:right;
+	font-weight:bold;
+	color:rgb(255, 0, 0);
+}
+.keomu_table_sub .goNext, .keomu_table_sub .goPre{
+	margin: 0px 0px 0px 10px;
+	padding:0px;
+	float:right;
+}
+#tableCmt{
+	margin: 0px;
+	padding: 0px;
+	color: #F2B6A5;
+	font-size: 30px;
+	font-style: bo;
+	display: none;
+}
+/*자유게시판*/
+#btnInsert{
+	float: right;
+	margin: 20px 0px 20px 0px;
+}
+#board_title{
+	float:right;
+	margin: 0px 5px 0px 20px;
+	border-color: rgb(219,173,255, 0.5);
+}
+
+/* 자가진단*/
+.jaga_contents table{
+	margin:0;
+	padding:0;
+	width:777px;
+	border:0px;
+	color: rgb(122,111,100);
+}
+
+.jaga_contents table thead tr th{
+	height: 30px;
+	text-align: center;
+	border-top:solid 2px #69ACDD;
+	border-bottom:solid 1px #69ACDD;
+}
+
+.jaga_contents table tr td{
+	height: 30px;
+	border-bottom:solid 1px #A2CCEB;
+}
+.jaga_table_sub{
+	margin: 10px 0px 0px 0px;
+	padding:  0px 20px;
+	vertical-align:center;
+	color:#69ACDD;
+	font-weight:bold;
+}
+
+/*자가진단 결과 모달*/
+#search_result{
+	font-color: red;
+}
+.modal_info, .modal_info tr td{
+	margin : 10px 0px 0px 0px;
+	border: 0.01em solid #2e6e9e;
+	font-color: #4297d7;
+}

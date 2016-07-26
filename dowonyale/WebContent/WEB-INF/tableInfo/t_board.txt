@@ -1,0 +1,47 @@
+drop table t_board;
+
+  CREATE TABLE `t_board` (                                                 
+           `board_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '글번호',  
+           `board_gbn` int(10) DEFAULT NULL COMMENT '보드구분 1:공지 2:교육 3:온라인상담 4:자유게시판',               
+           `board_title` varchar(300) DEFAULT NULL COMMENT '제목',              
+           `board_txt` text DEFAULT NULL COMMENT '내용',               
+           `hit_cnt` int(10) DEFAULT 0,
+           `del_yn` char(1) DEFAULT 'N',                                          
+           `in_date` datetime DEFAULT NULL,                                       
+           `in_user` varchar(50) DEFAULT NULL,                                        
+           `up_date` datetime DEFAULT NULL,                                       
+           `up_user` varchar(50) DEFAULT NULL,                                        
+           PRIMARY KEY (`board_id`)                                               
+         ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;           
+         
+ALTER TABLE `t_board` ADD COLUMN `reply_yn` char(1) DEFAULT 'N' COMMENT '답변여부'
+
+
+insert into t_board (board_gbn,board_title,board_txt,in_date) values(1,'도원예일 홈페이지가 리뉴얼 되었습니다','도원예일 홈페이지가 리뉴얼 되었습니다',now());
+insert into t_board (board_gbn,board_title,board_txt,in_date) values(1,'2013년 5월 1일 오픈됩니다','2013년 5월 1일 오픈됩니다',now());
+insert into t_board (board_gbn,board_title,board_txt,in_date) values(1,'안녕하세요 도원 예일입니다','안녕하세요 도원 예일입니다',now());
+insert into t_board (board_gbn,board_title,board_txt,in_date) values(1,'환영합니다 도원예일입니다','환영합니다 도원예일입니다',now());
+
+
+
+
+
+
+
+
+drop table t_file;
+
+ CREATE TABLE `t_file` (                                                         
+            `file_id` int(8) NOT NULL auto_increment COMMENT '첨부파일일련번호',  
+            `board_id` int(10) NOT NULL COMMENT '글번호',                 
+            `board_gbn` int(10) NOT NULL COMMENT '보드구분 1:공지 2:교육 3:온라인상담 4:자유게시판',
+            `file_size` varchar(10) NOT NULL COMMENT '첨부파일용량',                
+            `file_name` varchar(200) NOT NULL COMMENT '첨부파일명',                  
+            `file_re_name` varchar(100) NOT NULL COMMENT '변경된첨부파일명',      
+            `del_yn` char(1) NOT NULL default 'N' COMMENT '삭제여부',                   
+           `in_date` datetime DEFAULT NULL,                                       
+           `in_user` int(10) DEFAULT NULL,                                        
+           `up_date` datetime DEFAULT NULL,                                       
+           `up_user` int(10) DEFAULT NULL,          
+            PRIMARY KEY  (`file_id`)                                                      
+          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

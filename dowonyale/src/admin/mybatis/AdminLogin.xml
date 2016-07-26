@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminLogin">
+
+<select id="getLogin" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+
+	select 	
+		id,
+		login_gbn,
+		user_id,
+		user_pw,
+		user_name,
+		email1,
+		email2,
+		phone1,
+		phone2,
+		phone3,
+		child_name,
+		del_yn,
+		user_type,
+		login_cnt,
+		login_date,
+		in_date,
+		in_user,
+		up_date,
+		up_user,
+		zip_code,
+		addr1,
+		addr2,
+		tel1,
+		tel2,
+		tel3,
+		user_job,
+		p_id,
+		p_email,
+		p_nickname,
+		p_age,
+		p_gender,
+		p_name,
+		p_birthday,
+		p_user_img
+	from t_user
+	where user_id = upper(trim(#{user_id}))
+	and user_pw = upper(trim(#{user_pw}))
+	limit 1
+
+</select>
+
+<update id="updateLoginInfo" parameterType="String">
+	update t_user
+	set login_cnt = login_cnt + 1
+	, login_date = now()
+	where user_id = #{user_id}
+</update>
+
+</mapper>

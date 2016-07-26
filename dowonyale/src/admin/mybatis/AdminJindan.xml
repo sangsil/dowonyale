@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminJindan">
+
+<select id="jindanList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminJindan.jindanList_allCnt	 진단 문항 총 수	*/
+	SELECT 
+		COUNT(jindan_id) AS total
+	FROM
+		t_jindan
+	where del_yn = 'N'
+</select>
+
+<select id="jindanList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(jindan_id) AS total
+	FROM
+		t_jindan
+	where 1=1	
+	and del_yn = 'N'
+		<if test="search_value != null and search_value !=''">
+		AND (jindan_txt LIKE '%${search_value}%')
+<!-- 			<if test="search_type.equals('all')">AND (jindan_id LIKE '%${search_value}%' or jindan_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if>    			    			   		 -->
+<!-- 			<if test="search_type.equals('jindan_id')">AND jindan_id LIKE '%${search_value}%'</if>    			    			   		 -->
+<!-- 			<if test="search_type.equals('jindan_name')">AND jindan_name LIKE '%${search_value}%'</if> -->
+<!-- 			<if test="search_type.equals('email')">AND (email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if> -->
+		</if>
+	<if test="search_jindan_gbn != null and search_jindan_gbn !=''">
+		AND jindan_gbn = #{search_jindan_gbn}
+	</if>
+</select>
+
+<select id="jindanList" resultType="common.vo.JindanVo" parameterType="common.vo.SearchVo">
+/*	AdminJindan.jindanList 진단 문항 리스트*/
+	select 	
+		jindan_id, 
+		jindan_quest_no, 
+		jindan_sub_quest_no, 
+		jindan_gbn, 
+		(select cd_name from t_com_cd where cd_id = jindan_gbn) as jindan_gbn_name, 
+		jindan_txt, 
+		del_yn, 
+		in_date, 
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+		from t_jindan c
+	where 1=1
+	and del_yn = 'N'
+	<if test="search_value != null and search_value !=''">
+		AND (jindan_txt LIKE '%${search_value}%')
+<!-- 		<if test="search_type.equals('all')">AND (jindan_id LIKE '%${search_value}%' or jindan_name LIKE '%${search_value}%' or email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if>    			    			   		 -->
+<!-- 		<if test="search_type.equals('jindan_id')">AND jindan_id LIKE '%${search_value}%'</if>    			    			   		 -->
+<!-- 		<if test="search_type.equals('jindan_name')">AND jindan_name LIKE '%${search_value}%'</if> -->
+<!-- 		<if test="search_type.equals('email')">AND (email1 LIKE '%${search_value}%' or email2 LIKE '%${search_value}%')</if> -->
+	</if>
+	<if test="search_jindan_gbn != null and search_jindan_gbn !=''">
+		AND jindan_gbn = #{search_jindan_gbn}
+	</if>
+	GROUP BY jindan_gbn, jindan_quest_no
+	ORDER BY del_yn, jindan_gbn, jindan_quest_no
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="jindanDetail" resultType="common.vo.JindanVo" parameterType="common.vo.SearchVo">
+/*	AdminJindan.jindanDetail 진단 문항 상세*/
+	select 	
+		jindan_id, 
+		jindan_quest_no, 
+		jindan_sub_quest_no, 
+		jindan_gbn, 
+		jindan_txt,
+		del_yn, 
+		in_date, 
+		in_user, 
+		up_date, 
+		up_user
+	from t_jindan
+	where 1=1
+	and jindan_quest_no = #{jindan_quest_no}
+	and jindan_gbn = #{jindan_gbn}
+	order by del_yn, jindan_quest_no, jindan_sub_quest_no
+</select>
+
+<insert id="jindanInsert" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanInsert 진단 문항 인서트*/
+	insert into t_jindan 
+		(
+			jindan_quest_no, 
+			jindan_sub_quest_no, 
+			jindan_gbn, 
+			jindan_txt, 
+			in_date, 
+			in_user, 
+			up_date, 
+			up_user 
+		)
+		values
+		(
+			#{jindan_quest_no}, 
+			#{jindan_sub_quest_no}, 
+			#{jindan_gbn}, 
+			#{jindan_txt}, 
+			NOW(), 
+			#{in_user}, 
+			NOW(), 
+			#{in_user} 
+		)
+</insert>
+
+<update id="jindanUpdateDelete" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDelete 진단 문항 삭제*/
+	delete from t_jindan
+	where jindan_gbn = #{jindan_gbn}
+	and jindan_quest_no = #{jindan_quest_no}
+</update>
+
+<update id="jindanDelete" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDelete 진단 문항 삭제*/
+	update t_jindan 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where jindan_id = #{jindan_id}
+</update>
+
+<update id="jindanDeleteCancel" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDelete 진단 문항 삭제 취소*/
+	update t_jindan 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where jindan_id = #{jindan_id}
+</update>
+
+</mapper>

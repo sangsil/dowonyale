@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminPopup">
+
+<select id="popupList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(popup_id) AS total
+	FROM
+		t_popup
+	where popup_gbn = #{popup_gbn}	
+</select>
+
+<select id="popupList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(popup_id) AS total
+	FROM
+		t_popup
+	where del_yn = 'N'
+	and popup_gbn = #{popup_gbn}	
+	<if test="search_value != null and search_value !=''">
+		AND (popup_title LIKE '%${search_value}%' or popup_txt LIKE '%${search_value}%')
+	</if>
+</select>
+
+<select id="popupList" resultType="common.vo.PopupVo" parameterType="common.vo.SearchVo">
+/*	AdminPopup.popupList	팝업 fltmxm*/
+
+	SELECT 
+		popup_id,
+	    popup_gbn,
+	    popup_title,
+	    popup_txt,
+	    popup_width,
+	    popup_height,
+	    popup_top,
+	    popup_left,
+	    from_date,
+	    to_date,
+	    hit_cnt,
+	    del_yn,
+	    in_date,
+	    in_user,
+	    (select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+	    up_date,
+	    up_user,
+	    (select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	FROM t_popup c
+	where 1=1
+	<if test="search_value != null and search_value !=''">
+		AND (popup_title LIKE '%${search_value}%' or popup_txt LIKE '%${search_value}%')
+	</if>
+	ORDER BY del_yn, popup_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="popup_detail" resultType="common.vo.PopupVo" parameterType="common.vo.SearchVo">
+/*	AdminPopup.popup_detail	팝업 상세*/
+	select 	
+		popup_id,
+	    popup_gbn,
+	    popup_title,
+	    popup_txt,
+	    popup_width,
+	    popup_height,
+	    popup_top,
+	    popup_left,
+	    from_date,
+	    to_date,
+	    hit_cnt,
+	    del_yn,
+	    in_date,
+	    in_user,
+	    (select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+	    up_date,
+	    up_user,
+	    (select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_popup c
+	where popup_id = #{popup_id}
+</select>
+
+<insert id="popupInsert" parameterType="common.vo.PopupVo">
+	insert into t_popup 
+		( 
+		    popup_gbn,
+		    popup_title,
+		    popup_txt,
+		    popup_width,
+		    popup_height,
+		    popup_top,
+		    popup_left,
+		    from_date,
+		    to_date,
+			in_date, 
+			in_user,
+			up_date,
+			up_user
+		)
+		values
+		(
+		    #{popup_gbn},
+		    #{popup_title},
+		    #{popup_txt},
+		    #{popup_width},
+		    #{popup_height},
+		    #{popup_top},
+		    #{popup_left},
+		    #{from_date},
+		    #{to_date},
+			NOW(),
+			#{in_user},
+			NOW(),
+			#{in_user}	
+		)
+</insert>
+
+<update id="popupUpdate" parameterType="common.vo.PopupVo">
+	update t_popup 
+	set
+		popup_title = #{popup_title}, 
+		popup_txt	= #{popup_txt},
+		popup_width	= #{popup_width},
+		popup_height	= #{popup_height},
+		popup_top	= #{popup_top},
+		popup_left	= #{popup_left},
+		from_date	= #{from_date},
+		to_date	= #{to_date},
+		up_date 	= NOW() , 
+		up_user		= #{up_user}
+	where popup_id	= #{popup_id}
+</update>
+
+<update id="popupDelete" parameterType="common.vo.PopupVo">
+	update t_popup 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where popup_id	= #{popup_id}
+</update>
+
+<update id="popupDeleteCancel" parameterType="common.vo.PopupVo">
+	update t_popup 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where popup_id	= #{popup_id}
+</update>
+
+</mapper>

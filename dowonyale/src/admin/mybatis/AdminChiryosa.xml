@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminChiryosa">
+
+<select id="chiryosaList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(chiryosa_id) AS total
+	FROM
+		t_chiryosa
+</select>
+
+<select id="chiryosaList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(chiryosa_id) AS total
+	FROM
+		t_chiryosa
+	where 1=1
+	<if test="search_value != null and search_value !=''">
+		AND (board_title LIKE '%${search_value}%' or board_txt LIKE '%${search_value}%')
+	</if>
+</select>
+
+<select id="chiryosaTeacherList" resultType="common.vo.UserVo" parameterType="common.vo.SearchVo">
+/*	AdminChiryosa.chiryosaTeacherList	선생님 리스트	*/
+	select 	
+		user_id, 
+		user_name,
+		user_job
+	from t_user
+	where del_yn = 'N'
+	and user_type= 'T'
+	ORDER BY user_name
+</select>
+
+<select id="chiryosaList" resultType="common.vo.ChiryosaVo">
+/*	AdminChiryosa.chiryosaList	치료사 fltmxm*/
+	select 	
+		c.chiryosa_id, 
+		c.user_id,
+		(select user_name from t_user a where a.user_id = c.user_id) user_name, 
+		c.chiryosa_carr, 
+		c.order_no, 
+		c.del_yn,
+		u.user_job,
+		c.in_date, 
+		c.in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		c.up_date, 
+		c.up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_chiryosa c, t_user u
+	where 1=1
+	and c.user_id = u.user_id
+	<if test="search_value != null and search_value !=''">
+		AND chiryosa_carr LIKE '%${search_value}%'
+	</if>
+	order by del_yn, user_id, order_no
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="chiryosa_detail" resultType="common.vo.ChiryosaVo" parameterType="common.vo.SearchVo">
+/*	AdminChiryosa.chiryosa_detail	치료사 상세*/
+	select 	
+		chiryosa_id, 
+		user_id, 
+		chiryosa_carr, 
+		order_no, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_chiryosa c
+	where 1=1
+		AND chiryosa_id = #{chiryosa_id}
+</select>
+
+<insert id="chiryosaInsert" parameterType="common.vo.ChiryosaVo">
+	insert into t_chiryosa 
+		( 
+			user_id, 
+			chiryosa_carr, 
+			order_no, 
+			in_date, 
+			in_user
+		)
+		values
+		(
+			#{user_id}, 
+			#{chiryosa_carr}, 
+			#{order_no}, 
+			NOW(),
+			#{in_user}		
+		)
+<!-- 		<selectKey resultType="String"> -->
+<!-- 		SELECT last_insert_id() -->
+<!-- 		</selectKey>		 -->
+</insert>
+
+<update id="chiryosaUpdate" parameterType="common.vo.ChiryosaVo">
+	update t_chiryosa 
+	set
+		user_id 		= #{user_id}, 
+		chiryosa_carr 	= #{chiryosa_carr}, 
+		order_no		= #{order_no}, 
+		up_date 		= NOW() , 
+		up_user			= #{up_user}
+	where chiryosa_id	= #{chiryosa_id}
+</update>
+
+<update id="chiryosaDelete" parameterType="common.vo.ChiryosaVo">
+	update t_chiryosa 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where chiryosa_id	= #{chiryosa_id}
+</update>
+
+<update id="chiryosaDeleteCancel" parameterType="common.vo.ChiryosaVo">
+	update t_chiryosa 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where chiryosa_id	= #{chiryosa_id}
+</update>
+
+</mapper>

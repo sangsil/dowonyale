@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+
+    <select id="select_lgoin" parameterType="common.vo.UserVo" resultType="common.vo.UserVo">
+    /*	Login.select_lgoin 프론트 로그인	*/
+    SELECT 
+    		id
+			,user_id
+			,user_name
+			,user_type
+		FROM
+			t_user
+    	WHERE login_gbn = #{login_gbn}
+    		AND upper(user_id) = upper(trim(#{user_id}))
+			AND user_pw = #{user_pw}
+			AND DEL_YN = 'N'
+    </select>
+
+<update id="updateLoginInfo" parameterType="String">
+	update t_user
+	set login_cnt = login_cnt + 1
+	, login_date = now()
+	where user_id = #{user_id}
+</update>
+
+<select id="userDuplChk" resultType="Integer" parameterType="common.vo.UserVo">
+	select 	
+		count(id) as result
+	from t_user
+	where upper(user_id) = upper(trim(#{user_id}))
+</select>
+
+<select id="userEmailDuplChk" resultType="Integer" parameterType="common.vo.UserVo">
+	select 	
+		count(id) as result
+	from t_user
+	where upper(email1) = upper(trim(#{email1}))
+	and upper(email2) = upper(trim(#{email2}))
+	<if test="user_id != null and user_id !=''">
+		AND user_id != #{user_id}
+	</if>
+</select>
+
+<insert id="userInsert" parameterType="common.vo.UserVo">
+	insert into t_user 
+		( 
+			login_gbn,
+			user_id,
+			user_pw,
+			user_name,
+			email1,
+			email2,
+			phone1,
+			phone2,
+			phone3,
+			child_name,
+			user_type,
+			in_date,
+			in_user,
+			zip_code,
+			addr1,
+			addr2,
+			tel1,
+			tel2,
+			tel3,
+			user_job,
+			p_id,
+			p_email,
+			p_nickname,
+			p_age,
+			p_gender,
+			p_name,
+			p_birthday,
+			p_user_img
+		)
+		values
+		(
+			trim(#{login_gbn}),
+			trim(#{user_id}),
+			trim(#{user_pw}),
+			trim(#{user_name}),
+			trim(#{email1}),
+			trim(#{email2}),
+			trim(#{phone1}),
+			trim(#{phone2}),
+			trim(#{phone3}),
+			trim(#{child_name}),
+			trim(#{user_type}),
+			NOW(),
+			trim(#{in_user}),
+			trim(#{zip_code}),
+			trim(#{addr1}),
+			trim(#{addr2}),
+			trim(#{tel1}),
+			trim(#{tel2}),
+			trim(#{tel3}),
+			trim(#{user_job}),
+			trim(#{p_id}),
+			trim(#{p_email}),
+			trim(#{p_nickname}),
+			trim(#{p_age}),
+			trim(#{p_gender}),
+			trim(#{p_name}),
+			trim(#{p_birthday}),
+			trim(#{p_user_img})
+		)
+</insert>
+
+<update id="userUpdate" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		user_pw 	= trim(#{user_pw}),
+		user_name 	= trim(#{user_name}),
+		email1 		= trim(#{email1}),
+		email2 		= trim(#{email2}),
+		phone1 		= #{phone1},
+		phone2 		= trim(#{phone2}),
+		phone3 		= trim(#{phone3}),
+		child_name 	= trim(#{child_name}),
+		up_date 	= NOW() , 
+		up_user 	= #{up_user},
+		zip_code 	= trim(#{zip_code}),
+		addr1 		= trim(#{addr1}),
+		addr2 		= trim(#{addr2}),
+		tel1 		= trim(#{tel1}),
+		tel2 		= trim(#{tel2}),
+		tel3 		= trim(#{tel3})
+	where user_id = #{user_id}
+</update>
+
+<update id="userDelete" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where user_id = #{user_id}
+</update>
+
+<select id="userDetail" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	select 	
+		id, 
+		user_id, 
+		user_pw, 
+		user_name, 
+		email1, 
+		email2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		child_name, 
+		del_yn, 
+		user_type, 
+		login_cnt,
+		login_date, 
+		in_date, 
+		in_user, 
+		up_date, 
+		up_user, 
+		zip_code, 
+		addr1, 
+		addr2, 
+		tel1, 
+		tel2, 
+		tel3,
+		user_job
+		from t_user
+	where user_id = #{user_id}
+</select>
+
+<select id="getUserId" resultType="common.vo.UserVo" parameterType="common.vo.UserVo">
+	select 	
+		id, 
+		user_id, 
+		user_pw, 
+		user_name, 
+		email1, 
+		email2, 
+		phone1, 
+		phone2, 
+		phone3, 
+		child_name, 
+		del_yn, 
+		user_type, 
+		login_cnt,
+		login_date, 
+		in_date, 
+		in_user, 
+		up_date, 
+		up_user, 
+		zip_code, 
+		addr1, 
+		addr2, 
+		tel1, 
+		tel2, 
+		tel3,
+		user_job
+		from t_user
+	where email1 = trim(#{email1})
+	and email2 = trim(#{email2})
+	and user_name = trim(#{user_name})
+</select>
+
+<update id="updateImsiPw" parameterType="common.vo.UserVo">
+	update t_user 
+	set
+		user_pw 	= #{user_pw},
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where user_id = #{user_id}
+</update>
+
+<!-- 로그인 회원 확인 포탈아이디-->
+<select id ="login_portal" parameterType="common.vo.UserVo" resultType="common.vo.UserVo">
+	/* common.login.login_portal */
+	SELECT
+		id,
+		login_gbn,
+		user_id,
+		user_pw,
+		user_name,
+		email1,
+		email2,
+		phone1,
+		phone2,
+		phone3,
+		child_name,
+		del_yn,
+		user_type,
+		login_cnt,
+		login_date,
+		in_date,
+		in_user,
+		up_date,
+		up_user,
+		zip_code,
+		addr1,
+		addr2,
+		tel1,
+		tel2,
+		tel3,
+		user_job,
+		p_id,
+		p_email,
+		p_nickname,
+		p_age,
+		p_gender,
+		p_name,
+		p_birthday,
+		p_user_img
+	FROM t_user		
+	where login_gbn = #{login_gbn}
+	and p_id = #{p_id}
+	and del_yn = "N"
+</select>
+
+</mapper>

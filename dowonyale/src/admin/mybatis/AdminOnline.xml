@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminOnline">
+
+<select id="onlineList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(board_id) AS total
+	FROM
+		t_board
+	where board_gbn = #{board_gbn}	
+	and del_yn = 'N'
+</select>
+
+<select id="onlineList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(board_id) AS total
+	FROM
+		t_board
+	where board_gbn = #{board_gbn}	
+	and del_yn = 'N'
+	<if test="search_value != null and search_value !=''">
+		AND (board_title LIKE '%${search_value}%' or board_txt LIKE '%${search_value}%')
+	</if>
+</select>
+
+<select id="onlineList" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+/*	AdminOnline.onlineList	공지사항 fltmxm*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		reply_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where board_gbn = #{board_gbn}
+	and c.del_yn = 'N'
+	<if test="search_value != null and search_value !=''">
+		AND (board_title LIKE '%${search_value}%' or board_txt LIKE '%${search_value}%')
+	</if>
+	ORDER BY board_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="online_detail" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+/*	AdminOnline.online_detail	온라인 상세*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		reply_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where board_gbn = #{board_gbn}
+		AND board_id = #{board_id}
+</select>
+
+<insert id="onlineInsert" parameterType="common.vo.BoardVo">
+	insert into t_board 
+		( 
+			board_gbn, 
+			board_title, 
+			board_txt, 
+			in_date, 
+			in_user
+		)
+		values
+		(
+			#{board_gbn}, 
+			#{board_title}, 
+			#{board_txt}, 
+			NOW(),
+			#{in_user}		
+		)
+<!-- 		<selectKey resultType="String"> -->
+<!-- 		SELECT last_insert_id() -->
+<!-- 		</selectKey>		 -->
+</insert>
+
+<update id="onlineUpdate" parameterType="common.vo.BoardVo">
+	update t_board 
+	set
+		board_title = #{board_title}, 
+		board_txt	= #{board_txt}, 
+		reply_yn	= 'Y', 
+		up_date 	= NOW() , 
+		up_user		= #{up_user}
+	where board_id	= #{board_id}
+</update>
+
+<update id="onlineDelete" parameterType="common.vo.BoardVo">
+	update t_board 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where board_id	= #{board_id}
+</update>
+
+<update id="onlineDeleteCancel" parameterType="common.vo.BoardVo">
+	update t_board 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where board_id	= #{board_id}
+</update>
+
+</mapper>

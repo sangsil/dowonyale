@@ -1,0 +1,37 @@
+drop table t_voucher;
+
+CREATE TABLE `t_voucher` (
+		  `voucher_id` int(10) NOT NULL auto_increment COMMENT '바우처아이디',  
+          /*`charge_month` varchar(7) NOT NULL COMMENT '해당 월',*/
+          `gwamok` int(10) NOT NULL COMMENT '과목 101',
+          `suyeop_gubun` int(10) NOT NULL COMMENT '수업구분	103',
+          `voucher_amt` int(10) DEFAULT 0 COMMENT '바우처지원금액',
+          `suyeop_cnt` int(10) DEFAULT 0 COMMENT '수업횟수',
+          `suyeop_amt` int(10) NOT NULL COMMENT '추가수업료',
+          `del_yn` char(1) DEFAULT 'N',
+          `in_date` datetime DEFAULT NULL,                                                
+          `in_user` varchar(50) DEFAULT NULL,                                                
+          `up_date` datetime DEFAULT NULL,                                                
+          `up_user` varchar(50) DEFAULT NULL,                                                
+          PRIMARY KEY (`voucher_id`)                                             
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+
+        
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1013, 112000, 5, 48000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1014, 128000, 5, 32000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1015, 144000, 5, 16000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1016, 140000, 8, 100000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1017, 160000, 8, 80000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1018, 180000, 8, 60000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1019, 200000, 8, 40000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1001, 1020, 220000, 8, 20000, now(), 'dowonyale');
+
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1013, 112000, 4, 48000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1014, 128000, 4, 32000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1015, 144000, 4, 16000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1016, 140000, 5, 80000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1017, 160000, 5, 60000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1018, 180000, 5, 40000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1019, 200000, 5, 20000, now(), 'dowonyale');
+insert into t_voucher (gwamok, suyeop_gubun, voucher_amt, suyeop_cnt, suyeop_amt, in_date, in_user) values (1002, 1020, 220000, 5, 0, now(), 'dowonyale');

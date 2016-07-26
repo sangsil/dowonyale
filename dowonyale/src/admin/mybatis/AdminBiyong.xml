@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminBiyong">
+
+<select id="biyongList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(biyong_id) AS total
+	FROM
+		t_biyong
+</select>
+
+<select id="biyongList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	SELECT 
+		COUNT(biyong_id) AS total
+	FROM
+		t_biyong
+	where 1=1
+	<if test="search_value != null and search_value !=''">
+		AND (user_id LIKE '%${search_value}%' or biyong_session LIKE '%${search_value}%')
+	</if>
+</select>
+
+<select id="biyongTeacherList" resultType="common.vo.UserVo" parameterType="common.vo.SearchVo">
+/*	AdminBiyong.biyongTeacherList	선생님 리스트	*/
+	select 	
+		user_id, 
+		user_name,
+		user_job
+	from t_user
+	where del_yn = 'N'
+	and user_type= 'T'
+	ORDER BY user_name
+</select>
+
+<select id="biyongList" resultType="common.vo.BiyongVo" parameterType="common.vo.SearchVo">
+/*	AdminBiyong.biyongList	비용 fltmxm*/
+	select 	
+		c.biyong_id, 
+		c.user_id, 
+		(select user_name from t_user a where a.user_id = c.user_id) user_name, 
+		c.biyong_session, 
+		c.biyong_group, 
+		c.biyong_sangdam, 
+		c.biyong_food, 
+		c.biyong_sogyeonseo, 
+		c.biyong_geongang, 
+		c.biyong_gukmin, 
+		c.biyong_goyong, 
+		c.biyong_sanjea, 
+		c.biyong_toijik, 
+		c.biyong_etc_txt, 
+		c.biyong_etc, 
+		c.del_yn,
+		c.in_date, 
+		c.in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		c.up_date, 
+		c.up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_biyong c, t_user u
+	where 1=1
+	and c.user_id = u.user_id
+	<if test="search_value != null and search_value !=''">
+		AND (user_id LIKE '%${search_value}%' or biyong_session LIKE '%${search_value}%')
+	</if>
+	order by del_yn, user_id
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="biyong_detail" resultType="common.vo.BiyongVo" parameterType="common.vo.SearchVo">
+/*	AdminBiyong.biyong_detail	비용 상세*/
+	select 	
+		biyong_id, 
+		user_id, 
+		biyong_session, 
+		biyong_group, 
+		biyong_sangdam, 
+		biyong_food, 
+		biyong_sogyeonseo, 
+		biyong_geongang, 
+		biyong_gukmin, 
+		biyong_goyong, 
+		biyong_sanjea, 
+		biyong_toijik, 
+		biyong_etc_txt, 
+		biyong_etc, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_biyong c
+	where 1=1
+		AND biyong_id = #{biyong_id}
+</select>
+
+<insert id="biyongInsert" parameterType="common.vo.BiyongVo">
+	insert into t_biyong 
+		( 
+			user_id,
+			<if test="biyong_session != null and biyong_session !=''">
+			biyong_session, 
+			</if>
+			<if test="biyong_group != null and biyong_group !=''">
+			biyong_group, 
+			</if>
+			<if test="biyong_sangdam != null and biyong_sangdam !=''">
+			biyong_sangdam, 
+			</if>
+			<if test="biyong_food != null and biyong_food !=''">
+			biyong_food, 
+			</if>
+			<if test="biyong_sogyeonseo != null and biyong_sogyeonseo !=''">
+			biyong_sogyeonseo, 
+			</if>
+			<if test="biyong_geongang != null and biyong_geongang !=''">
+			biyong_geongang, 
+			</if>
+			<if test="biyong_gukmin != null and biyong_gukmin !=''">
+			biyong_gukmin, 
+			</if>
+			<if test="biyong_goyong != null and biyong_goyong !=''">
+			biyong_goyong, 
+			</if>
+			<if test="biyong_sanjea != null and biyong_sanjea !=''">
+			biyong_sanjea, 
+			</if>
+			<if test="biyong_toijik != null and biyong_toijik !=''">
+			biyong_toijik, 
+			</if>
+			<if test="biyong_etc != null and biyong_etc !=''">
+			biyong_etc, 
+			</if>
+			biyong_etc_txt, 
+			in_date, 
+			in_user
+		)
+		values
+		(
+			trim(#{user_id}),
+			<if test="biyong_session != null and biyong_session !=''">
+			trim(#{biyong_session}),
+			</if>
+			<if test="biyong_group != null and biyong_group !=''">
+			trim(#{biyong_group}),
+			</if>
+			<if test="biyong_sangdam != null and biyong_sangdam !=''">
+			trim(#{biyong_sangdam}),
+			</if>
+			<if test="biyong_food != null and biyong_food !=''">
+			trim(#{biyong_food}),
+			</if>
+			<if test="biyong_sogyeonseo != null and biyong_sogyeonseo !=''">
+			trim(#{biyong_sogyeonseo}),
+			</if>
+			<if test="biyong_geongang != null and biyong_geongang !=''">
+			trim(#{biyong_geongang}),
+			</if>
+			<if test="biyong_gukmin != null and biyong_gukmin !=''">
+			trim(#{biyong_gukmin}),
+			</if>
+			<if test="biyong_goyong != null and biyong_goyong !=''">
+			trim(#{biyong_goyong}),
+			</if>
+			<if test="biyong_sanjea != null and biyong_sanjea !=''">
+			trim(#{biyong_sanjea}),
+			</if>
+			<if test="biyong_toijik != null and biyong_toijik !=''">
+			trim(#{biyong_toijik}),
+			</if>
+			<if test="biyong_etc != null and biyong_etc !=''">
+			trim(#{biyong_etc}),
+			</if>
+			trim(#{biyong_etc_txt}), 
+			NOW(),
+			#{in_user}		
+		)
+</insert>
+
+<update id="biyongUpdate" parameterType="common.vo.BiyongVo">
+	update t_biyong 
+	set
+		biyong_session 	= #{biyong_session}, 
+		biyong_group	= #{biyong_group}, 
+		biyong_sangdam	= #{biyong_sangdam}, 
+		biyong_food		= #{biyong_food}, 
+		biyong_sogyeonseo	= #{biyong_sogyeonseo}, 
+		biyong_geongang	= #{biyong_geongang}, 
+		biyong_gukmin	= #{biyong_gukmin}, 
+		biyong_goyong	= #{biyong_goyong}, 
+		biyong_sanjea	= #{biyong_sanjea}, 
+		biyong_toijik	= #{biyong_toijik}, 
+		biyong_etc_txt	= #{biyong_etc_txt}, 
+		biyong_etc		= #{biyong_etc}, 
+		up_date 		= NOW() , 
+		up_user			= #{up_user}
+	where biyong_id	= #{biyong_id}
+</update>
+
+<update id="biyongDelete" parameterType="common.vo.BiyongVo">
+	update t_biyong 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where biyong_id	= #{biyong_id}
+</update>
+
+<update id="biyongDeleteCancel" parameterType="common.vo.BiyongVo">
+	update t_biyong 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where biyong_id	= #{biyong_id}
+</update>
+
+</mapper>

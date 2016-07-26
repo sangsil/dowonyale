@@ -1,0 +1,37 @@
+// ========================================================================================================================
+// 호스팅
+카페24 dowonyale/siro9866
+db: dowonyale
+id/pw: dowonyale/sangsil2
+ssh: ssh dowonyale@dowonyale.cafe24.com / sangsil2
+ftp: dowonyale.cafe24.com / sangsil2
+
+
+// SVN 
+url: https://dev.naver.com/svn/dowonyale
+id/pw: siro9/sangsil2
+
+
+// 로그인 연동
+1. 네이버
+	App명: 도원예일
+	도매인: dowonyale.com
+	https://nid.naver.com/devcenter/appinfo.nhn?consumer_key=omqEt6xIDnU5pGC0YAxx
+	계정:siro9866@naver.com
+
+2. 카키오
+	App명: 도원예일
+	도매인: dowonyale.com
+	https://developers.kakao.com/apps/81012
+	계정:siro-9@hanmail.net
+
+3. 페이스북
+	App명: 도원예일
+	도매인: dowonyale.com
+	https://developers.kakao.com/apps/81012
+	계정: siro9866@naver.com
+	
+	
+// 지도 API
+1. 네이버 : siro9
+2. 다음: siro-9

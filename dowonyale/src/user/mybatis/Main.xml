@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+
+<!-- 회원정보 -->
+<select id="getNews_board_list" resultType="common.vo.BoardVo">
+	/* main.getNews_board_list */
+    
+	select 
+		board_id
+		, board_gbn
+		, board_title
+		, in_date
+	from t_board
+	where del_yn = 'N'
+	and board_gbn in('1','2')
+	order by board_id desc
+	limit 0,3
+	
+</select>
+
+
+<select id="getPopup_list" resultType="common.vo.PopupVo">
+	/* main.getPopup_list */
+    
+ 	SELECT 
+		popup_id,
+	    popup_gbn,
+	    popup_title,
+	    popup_txt,
+	    popup_width,
+	    popup_height,
+	    popup_top,
+	    popup_left,
+	    from_date,
+	    to_date
+	FROM t_popup 
+    where del_yn = 'N'
+    and DATE_FORMAT(now(), '%Y-%m-%d') between from_date and to_date
+</select>
+
+</mapper>

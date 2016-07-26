@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="keomu">
+
+<update id="addHitCnt" parameterType="common.vo.SearchVo">
+	/*Keomu.addHitCnt 조히수업데이트	*/
+	update t_board 
+	set
+		hit_cnt		= hit_cnt + 1
+	where board_id	= #{board_id}
+</update>
+
+<select id="gongjiList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*Keomu.gongjiList_allCnt 공지,교육 총 카운트	*/
+	SELECT 
+		COUNT(board_id) AS total
+	FROM
+		t_board
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}	
+</select>
+
+<select id="gongjiList" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.gongjiList 공지,교육 총 리스트	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}
+	ORDER BY board_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="gongji_detail" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.gongjiList 공지,교육 총 상세	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N'
+	and board_gbn = #{board_gbn}
+	and  board_id = #{board_id}
+</select>
+
+
+
+<select id="onlineList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*Keomu.onlineList_allCnt 온라인 총 카운트	*/
+	SELECT 
+		COUNT(board_id) AS total
+	FROM
+		t_board
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}	
+</select>
+
+<select id="onlineList" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.onlineList 온라인 총 리스트	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		reply_yn,
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}
+	and in_user = #{in_user}
+	ORDER BY board_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="online_detail" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.onlineList 온라인 총 상세	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		reply_yn,
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N'
+	and board_gbn = #{board_gbn}
+	and  board_id = #{board_id}
+</select>
+<select id="jayuList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*Keomu.jayuList_allCnt 자유게시판 총 카운트	*/
+	SELECT 
+		COUNT(board_id) AS total
+	FROM
+		t_board
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}	
+</select>
+
+<insert id="online_insert" parameterType="common.vo.BoardVo">
+	insert into t_board 
+		( 
+			board_gbn, 
+			board_title, 
+			board_txt, 
+			in_date, 
+			in_user
+		)
+		values
+		(
+			#{board_gbn}, 
+			#{board_title}, 
+			#{board_txt}, 
+			NOW(),
+			#{in_user}		
+		)
+</insert>
+
+<insert id="online_update" parameterType="common.vo.BoardVo">
+	update t_board set
+		 board_title = #{board_title}
+		, board_txt = #{board_txt}
+		, up_user = #{up_user}
+		, up_date = NOW()
+	where board_id = #{board_id}
+</insert>
+
+<update id="online_delete" parameterType="common.vo.BoardVo">
+	update t_board
+		set del_yn = 'Y'
+		, up_user = #{up_user}
+		, up_date = NOW()
+	where board_id = #{board_id}
+</update>
+
+<select id="jayuList" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.jayuList 자유게시판 총 리스트	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N' 
+	and board_gbn = #{board_gbn}
+	ORDER BY board_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="jayu_detail" resultType="common.vo.BoardVo" parameterType="common.vo.SearchVo">
+	/*Keomu.jayuList 자유게시판 총 상세	*/
+	select 	
+		board_id, 
+		board_gbn, 
+		board_title, 
+		board_txt, 
+		hit_cnt, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_board c
+	where del_yn = 'N'
+	and board_gbn = #{board_gbn}
+	and  board_id = #{board_id}
+</select>
+
+<insert id="jayu_insert" parameterType="common.vo.BoardVo">
+	insert into t_board 
+		( 
+			board_gbn, 
+			board_title, 
+			board_txt, 
+			in_date, 
+			in_user
+		)
+		values
+		(
+			#{board_gbn}, 
+			#{board_title}, 
+			#{board_txt}, 
+			NOW(),
+			#{in_user}		
+		)
+</insert>
+
+<insert id="jayu_update" parameterType="common.vo.BoardVo">
+	update t_board set
+		 board_title = #{board_title}
+		, board_txt = #{board_txt}
+		, up_user = #{up_user}
+		, up_date = NOW()
+	where board_id = #{board_id}
+</insert>
+
+<update id="jayu_delete" parameterType="common.vo.BoardVo">
+	update t_board
+		set del_yn = 'Y'
+		, up_user = #{up_user}
+		, up_date = NOW()
+	where board_id = #{board_id}
+</update>
+
+
+<select id="pre_board_id" resultType="String" parameterType="common.vo.SearchVo">
+	/*Keomu.gongjiList 공지,교육 이전글	*/
+	select max(board_id) board_id
+	from t_board
+	where del_yn = 'N'
+	and board_id &lt; #{board_id}
+	and board_gbn = #{board_gbn}
+	<if test="in_user != null and in_user !=''">
+		AND in_user = ${in_user}
+	</if>
+</select>
+
+<select id="next_board_id" resultType="String" parameterType="common.vo.SearchVo">
+	/*Keomu.gongjiList 공지,교육 다음글	*/
+	select min(board_id) board_id
+	from t_board
+	where del_yn = 'N'
+	and board_id &gt; #{board_id}
+	and board_gbn = #{board_gbn}
+	<if test="in_user != null and in_user !=''">
+		AND in_user = ${in_user}
+	</if>
+</select>
+
+</mapper>

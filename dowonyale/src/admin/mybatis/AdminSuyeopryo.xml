@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminSuyeopryo">
+
+<select id="suyeopryoList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeopryo.suyeopryoList_allCnt	수업료관리 총카운트*/
+	SELECT 
+		COUNT(suyeopryo_id) AS total
+	FROM
+		t_suyeopryo
+</select>
+
+<select id="suyeopryoList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeopryo.suyeopryoList_totalCnt	수업료관리 카운트*/
+	SELECT 
+		COUNT(suyeopryo_id) AS total
+	FROM
+		t_suyeopryo
+	where 1=1	
+</select>
+
+<select id="suyeopryoList" resultType="common.vo.SuyeopryoVo" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeopryo.suyeopryoList	수업료관리 리스트*/
+	select 	
+		suyeopryo_id, 
+		suyeop_month, 
+		gwamok, 
+		(select cd_name from t_com_cd where cd_id = gwamok) as gwamok_name, 
+		suyeop_gubun, 
+		(select cd_name from t_com_cd where cd_id = suyeop_gubun) as suyeop_gubun_name,
+		cash_charge, 
+		card_charge, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_suyeopryo c
+	where 1=1
+	ORDER BY del_yn, suyeop_gubun, gwamok
+</select>
+
+<select id="suyeopryoAllList" resultType="common.vo.SuyeopryoVo" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeopryo.suyeopryoList	수업료관리 리스트 셀릭트*/
+	select 	
+		suyeopryo_id, 
+		suyeop_month, 
+		gwamok, 
+		(select cd_name from t_com_cd where cd_id = gwamok) as gwamok_name, 
+		suyeop_gubun, 
+		(select cd_name from t_com_cd where cd_id = suyeop_gubun) as suyeop_gubun_name,
+		cash_charge, 
+		card_charge, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_suyeopryo c
+	where del_yn = 'N'
+	ORDER BY suyeop_gubun, gwamok
+</select>
+
+<insert id="suyeopryoInsert" parameterType="common.vo.SuyeopryoVo">
+/*	AdminSuyeopryo.suyeopryoInsert	수업료관리 등록*/
+	insert into t_suyeopryo 
+		(
+		suyeop_month,
+		gwamok, 
+		suyeop_gubun, 
+		cash_charge, 
+		card_charge, 
+		in_date, 
+		in_user
+		)
+		values
+		(
+			trim(#{suyeop_month}), 
+			trim(#{gwamok}), 
+			trim(#{suyeop_gubun}), 
+			trim(#{cash_charge}), 
+			trim(#{card_charge}), 
+			NOW(),
+			#{in_user} 
+		)
+</insert>
+
+<update id="suyeopryoUpdate" parameterType="common.vo.SuyeopryoVo">
+/*	AdminSuyeopryo.suyeopryoUpdate	수업료관리 수정	*/
+	update t_suyeopryo 
+	set
+		cash_charge = trim(#{cash_charge}),
+		card_charge = trim(#{card_charge}),
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where suyeopryo_id = #{suyeopryo_id}
+</update>
+
+<update id="suyeopryoDelete" parameterType="common.vo.SuyeopryoVo">
+/*	AdminSuyeopryo.suyeopryoDelete	수업료관리 삭제	*/
+	update t_suyeopryo 
+	set
+		del_yn 	= 'Y',
+		up_date = NOW() , 
+		up_user = #{up_user}
+	where suyeopryo_id = #{suyeopryo_id}
+</update>
+
+<update id="suyeopryoDeleteCancel" parameterType="common.vo.SuyeopryoVo">
+/*	AdminSuyeopryo.suyeopryoDeleteCancel	수업료관리 삭제취소	*/
+	update t_suyeopryo 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where suyeopryo_id = #{suyeopryo_id}
+</update>
+
+</mapper>

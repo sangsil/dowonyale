@@ -1,0 +1,51 @@
+drop table t_menu;
+
+
+
+CREATE TABLE `t_menu` (                                                           
+          `menu_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '유니크아이디',  
+          `menu_url` varchar(100) DEFAULT NULL,
+		  `menu_name` varchar(100) DEFAULT NULL,
+		  `menu_type` varchar(10) DEFAULT NULL,
+          `del_yn` char(1) DEFAULT 'N',
+          PRIMARY KEY (`menu_id`)                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/chiryo_bumo'		, '부모교육', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/chiryo_eoneo'	, '언어치료', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/chiryo_geurup'	, '그룹치료', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/chiryo_inji'		, '인지학습치료', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/chiryo_nolyi'	, '놀이치료', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/intro_center'	, '센터둘러보기', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/intro_chaja'		, '찾아오는길', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/intro_chiryosa'	, '치료사소개', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/intro_dowon'		, '도원예일소개', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/intro_wonjang'	, '원장인삿말', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/jaga_adhd'		, 'ADHC아동체크리스트', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/jaga_hakseub'	, '학습/반항성/따돌림체크리스트', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/jaga_soa'		, '소아불안체크리스트', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/keomu_gongji'	, '공지사항', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/keomu_gwanryeon'	, '관련사이트', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/keomu_gyoyuk'	, '교육공지', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/keomu_jayu'		, '자유게시판', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/keomu_online'	, '온라인상담', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/login'			, '로그인', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/logout'			, '로그아웃', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/main'			, '메인', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/sangdam_jeolcha'	, '상담절차', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/sangdam_sigan'	, '상담시간및예약', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/user/user'			, '회원정보', 'USER');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/adong', '아동관리', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/biyong', '비용관리', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/chiryosa', '치료사관리', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/comcd', '공통코드', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/gongji', '공지사항', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/gyouk', '교육공지', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/jayu', '자유게시판', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/jindan', '진단관리', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/login', '로그인', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/logout', '로그아웃', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/main', '메인', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/online', '온라상담', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/user', '회원관리', 'ADMIN');
+insert into t_menu (menu_url, menu_name, menu_type) values ('/admin/voucher', '바우처관리', 'ADMIN');

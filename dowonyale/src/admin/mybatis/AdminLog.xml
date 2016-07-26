@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminLog">
+
+	<insert id="logInsert" parameterType="common.vo.LogVo">
+		insert into t_log_${nowYear}
+			( 
+				log_url, 
+				device_gbn, 
+				mobile_yn,
+				in_ip,
+				in_user,
+				in_date 
+			)
+			values
+			(
+				#{log_url}, 
+				#{device_gbn}, 
+				#{mobile_yn},
+				#{in_ip},
+				#{in_user}, 
+				NOW()
+			)
+	</insert>
+
+<select id="logList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/* adminLog.logList_allCnt*/
+	SELECT 
+		COUNT(log_id) AS total
+	FROM t_log_${searchYear}
+	where 1=1
+</select>
+
+<select id="logList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+/* adminLog.logList_totalCnt*/
+	SELECT 
+		COUNT(log_id) AS total
+	FROM t_log_${searchYear}
+	WHERE in_date &gt;= #{fromDate}
+	AND in_date &lt;= DATE_ADD(#{toDate},INTERVAL 1 DAY)
+	<if test="search_value != null and search_value !=''">
+		AND ( 
+			UPPER(log_url) LIKE CONCAT('%', UPPER(#{search_value}), '%') 
+			or UPPER(device_gbn) LIKE CONCAT('%', UPPER(#{search_value}), '%')  
+			or in_ip LIKE CONCAT('%', #{search_value}, '%') 
+		)
+	</if>
+</select>
+
+<select id="logList" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+/* adminLog.logList*/
+	select 	
+		log_id, 
+		log_url, 
+		device_gbn, 
+		mobile_yn,
+		in_ip, 
+		in_user, 
+		in_date
+	from t_log_${searchYear}
+	WHERE in_date &gt;= #{fromDate}
+	AND in_date &lt;= DATE_ADD(#{toDate},INTERVAL 1 DAY)
+	<if test="search_value != null and search_value !=''">
+		AND ( 
+			UPPER(log_url) LIKE CONCAT('%', UPPER(#{search_value}), '%') 
+			or UPPER(device_gbn) LIKE CONCAT('%', UPPER(#{search_value}), '%')  
+			or in_ip LIKE CONCAT('%', #{search_value}, '%') 
+		)
+	</if>
+	ORDER BY log_id DESC
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="logVisitor" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+/* adminLog.logVisitor*/
+select year(ym) title, menu_name, count(1) cnt1, max(in_ip) in_ip
+from(   
+		select CONCAT(year(in_date), '-', month(in_date), '-', day(in_date)) ym, in_ip, substr(log_url, 1,6) log_url,
+		CASE substr(log_url, 1,6) 
+			WHEN '/user/' THEN '프론트'
+			WHEN '/admin' THEN '관리자'
+			ELSE '기타'
+		END menu_name
+		from t_log_${searchYear}
+		where log_url LIKE CONCAT(#{search_value}, '%')
+        group by ym, in_ip
+) a
+group by menu_name
+</select>
+
+<!-- 메뉴별로그 -->
+<select id="logVisitorUrl" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+	/* adminLog.logVisitorUrl*/
+	select title, (cnt2/totCnt * 100) cnt1, cnt2, totCnt
+	from (
+		select title, sum(cnt2) cnt2, sum(totCnt) totCnt
+		from (
+	    
+			        <foreach collection="logTerm" item="logTerm" index="index" separator="UNION ALL">
+			            <include refid="logVisitorUrl_gbn_sql"/>
+			        </foreach>
+	
+		) a
+		group by title
+	) b
+	order by title
+</select>
+<!-- 메뉴별로그 -->
+<sql id="logVisitorUrl_gbn_sql">
+		select max(log_url) log_url, sum(cnt2) cnt2, ifnull(menu_name, '기타') title, max(b.totCnt) totCnt
+		from(
+			select log_url, count(log_id) cnt2, (select menu_name from t_menu where log_url like CONCAT(menu_url, '%')) menu_name from t_log_${logTerm} 
+			where log_url LIKE CONCAT(#{search_value}, '%') GROUP BY log_url 
+		) a, (select count(log_id) totCnt from t_log_${logTerm} where log_url LIKE CONCAT(#{search_value}, '%')) b
+		group by title
+</sql>
+
+
+<!-- 회원가입 경로 -->
+<select id="join_gbn" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+	/* adminLog.logVisitor*/
+	select login_gbn title, count(1) cnt1 
+	from t_user
+	where del_yn = 'N'
+	and YEAR(in_date) between #{fromYear } and #{toYear }
+	group by login_gbn
+</select>
+
+<!-- 브라우저구분 -->
+<select id="logBrowser_gbn" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+/* adminLog.logBrowser_gbn*/
+select title, (cnt2/totCnt * 100) cnt1, cnt2, totCnt
+from (
+	select title, sum(cnt2) cnt2, sum(totCnt) totCnt
+	from (
+			        <foreach collection="logTerm" item="logTerm" index="index" separator="UNION ALL">
+			            <include refid="logBrowser_gbn_sql"/>
+			        </foreach>
+	) a
+	group by title
+) b
+order by cnt2 desc
+</select>
+<!-- 브라우저구분 -->
+<sql id="logBrowser_gbn_sql">
+	select device_gbn title, count(1) cnt2, c.totCnt
+	from t_log_${logTerm } b, (select count(1) totCnt from t_log_${logTerm }) c
+	group by device_gbn
+</sql>
+
+<!-- 모바일 구분 -->
+<select id="logMobine_gbn" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+/* adminLog.logMobine_gbn*/
+    select title, (cnt2/totCnt * 100) cnt1, cnt2, totCnt 
+    from (
+		select title, sum(cnt2) cnt2, sum(totCnt) totCnt
+		from (
+			select 
+				case mobile_yn
+				    WHEN 'N' THEN 'PC'
+				    ELSE 'MOBILE'
+				end title, (cnt2/totCnt * 100) cnt1, cnt2,  totCnt
+			from ( 
+					
+			        <foreach collection="logTerm" item="logTerm" index="index" separator="UNION ALL">
+			            <include refid="logMobine_gbn_sql"/>
+			        </foreach>
+				
+			) a 
+		) b
+		group by title
+	) c
+</select>
+<!-- 모바일 구분 -->
+<sql id="logMobine_gbn_sql">
+	select mobile_yn, count(1) cnt2, c.totCnt
+	from t_log_${logTerm } b, (select count(1) totCnt from t_log_${logTerm }) c
+	group by mobile_yn
+</sql>
+
+<!-- 월별 방문자수 -->
+<select id="logVisitor_Month" resultType="common.vo.LogVo" parameterType="common.vo.SearchVo">
+/* adminLog.logVisitor_Month*/
+select CONCAT(month(ym)) title, max(menu_name) menu_name, count(1) cnt1, max(in_ip) in_ip
+from(   
+		select CONCAT(year(in_date), '-', month(in_date), '-', day(in_date)) ym, in_ip, substr(log_url, 1,6) log_url,  max(in_date) in_date,
+		CASE substr(log_url, 1,6) 
+			WHEN '/user/' THEN '프론트'
+			WHEN '/admin' THEN '관리자'
+			ELSE '기타'
+		END menu_name
+		from t_log_${searchYear}
+		where log_url LIKE CONCAT(#{search_value}, '%')
+        group by ym, in_ip
+) a
+group by title
+order by in_date
+</select>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+<properties>
+
+	<comment>프로퍼티</comment>
+
+	<!-- 관리자 메일 주 -->
+	<entry key="ADMIN_MAILE_ADDRESS">admin@dowonyale.com</entry>
+	
+	
+	<!-- 로그인 기관 -->
+	<entry key="LOGIN_GBN_00">MEE</entry>
+	<entry key="LOGIN_GBN_01">NAVER</entry>
+	<entry key="LOGIN_GBN_02">KAKAO</entry>
+	<entry key="LOGIN_GBN_03">GOOGLE</entry>
+	<entry key="LOGIN_GBN_04">FACEBOOK</entry>
+	<entry key="LOGIN_GBN_05">TWITTER</entry>
+		
+	<!-- 네이버 아이디 로그인 설 -->
+	<entry key="NAVER_LOGIN_URL">https://nid.naver.com/oauth2.0</entry>
+	<entry key="NAVER_LOGIN_CLIENT_ID">omqEt6xIDnU5pGC0YAxx</entry>
+	<entry key="NAVER_LOGIN_REDIRECT_URI">http://dowonyale.com/user/loginCallback.dowon</entry>
+	<entry key="NAVER_LOGIN_CLIENT_SECRET">bKQwRTP9fH</entry>
+	
+	<entry key="NAVER_LOGIN_XML_RESULT">//data/result</entry>
+	<entry key="NAVER_LOGIN_XML_RESPONSE">//data/response</entry>
+	
+	<entry key="KAKAO_LOGIN_APP_ID">238a31ffbe1a2cc66a6bb5ef6805d9fc</entry>
+	
+	<entry key="FACEBOOK_LOGIN_APP_ID">1148357315184139</entry>
+	
+	<!-- 트위터 아이디 로그인 설 -->
+	<entry key="TWITTER_LOGIN_API_KEY">QSBvh2BkF0cbOgqw7ctbp6Mtn</entry>
+	<entry key="TWITTER_LOGIN_API_SECRET">yPibd62FG5IYKDqidljHywNvzsIod5BGbwhYHPPmnAr3BfiEjw</entry>
+	<entry key="TWITTER_LOGIN_API_OWNER">siro9866</entry>
+	<entry key="TWITTER_LOGIN_API_ID">359256617</entry>
+	
+	<entry key="alertSaveOk">저장되었습니다.</entry>
+	<entry key="alertFail">일시적인 오류입니다. 관리자에게 문의 하세요</entry>
+
+	<!-- 로그적재하지 않는 검암집(221.154.161.42), 네이버로봇(211.249.40.*), 검색로봇(203.133.*), 구글봇(66.249.79.*)-->
+	<entry key="NOLOGIP">221.154.161.42,211.249.40,203.133.,66.249.79.</entry>
+	
+	<!-- 이메일 전송 타입 -->
+	<entry key="EMAIL_TYPE_BOARD">BOARD</entry>
+	
+	<!-- 진단 코드 전송 타입 -->
+	<entry key="JINDAN_GBN_ADHD">1029</entry>
+	<entry key="JINDAN_GBN_SOA">1030</entry>
+	<entry key="JINDAN_GBN_HAKSEUB">1031</entry>
+	
+	
+</properties>

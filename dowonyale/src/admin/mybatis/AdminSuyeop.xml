@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminSuyeop">
+
+<select id="suyeopList_allCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeop.suyeopList_allCnt	수업관리 총카운트*/
+	SELECT 
+		COUNT(suyeop_id) AS total
+	FROM
+		t_suyeop
+</select>
+
+<select id="suyeopList_totalCnt" resultType="Integer" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeop.suyeopList_totalCnt	수업관리 카운트*/
+	SELECT 
+		COUNT(suyeop_id) AS total
+	FROM
+		t_suyeop
+	where 1=1	
+</select>
+
+<select id="suyeopList" resultType="common.vo.SuyeopVo" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeop.suyeopList	수업관리 리스트*/
+	select 	
+		suyeop_id, 
+		suyeop_month, 
+		gwamok, 
+		(select cd_name from t_com_cd where cd_id = gwamok) as gwamok_name, 
+		user_id,
+		(select user_name from t_user where user_id = c.user_id) as user_name, 
+		singyu, 
+		(select cd_name from t_com_cd where cd_id = singyu) as singyu_name,
+		suyeop_gubun, 
+		(select cd_name from t_com_cd where cd_id = suyeop_gubun) as suyeop_gubun_name,
+		adong_id, 
+		(select adong_name from t_adong where adong_id = c.adong_id) as adong_name, 
+		suyeop_cnt, 
+		napip_gbn, 
+		(select cd_name from t_com_cd where cd_id = napip_gbn) as napip_gbn_name,
+		napip_date, 
+		napip_amt,
+		voucher_amt,
+<!-- 		suyeopPyeongga, -->
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_suyeop c
+	where 1=1
+	ORDER BY del_yn, suyeop_month desc, suyeop_id desc
+</select>
+
+<select id="suyeopAllList" resultType="common.vo.SuyeopVo" parameterType="common.vo.SearchVo">
+	/*	AdminSuyeop.suyeopList	수업관리 리스트 셀릭트*/
+	select 	
+		suyeop_id, 
+		suyeop_month, 
+		gwamok, 
+		(select cd_name from t_com_cd where cd_id = gwamok) as gwamok_name, 
+		suyeop_gubun, 
+		(select cd_name from t_com_cd where cd_id = suyeop_gubun) as suyeop_gubun_name,
+		cash_charge, 
+		card_charge, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_suyeop c
+	where del_yn = 'N'
+	ORDER BY suyeop_gubun, gwamok
+</select>
+
+<insert id="suyeopInsert" parameterType="common.vo.SuyeopVo">
+/*	AdminSuyeop.suyeopInsert	수업관리 등록*/
+	insert into t_suyeop 
+		(
+		suyeop_month, 
+		gwamok, 
+		user_id, 
+		singyu, 
+		suyeop_gubun, 
+		adong_id, 
+		suyeop_cnt, 
+		napip_gbn, 
+		napip_date, 
+		voucher_amt,
+		napip_amt,
+<!-- 		suyeopPyeongga, -->
+		in_date, 
+		in_user
+		)
+		values
+		(
+			trim(#{suyeop_month}), 
+			trim(#{gwamok}),
+			trim(#{user_id}),
+			trim(#{singyu}),
+			trim(#{suyeop_gubun}), 
+			trim(#{adong_id}),
+			trim(#{suyeop_cnt}), 
+			trim(#{napip_gbn}),
+			trim(#{napip_date}),
+			trim(#{voucher_amt}),
+			trim(#{napip_amt}),
+<!-- 			trim(#{suyeopPyeongga}), -->
+			NOW(),
+			#{in_user} 
+		)
+</insert>
+
+<update id="suyeopUpdate" parameterType="common.vo.SuyeopVo">
+/*	AdminSuyeop.suyeopUpdate	수업관리 수정	*/
+	update t_suyeop 
+	set
+		user_id 		= trim(#{user_id}),
+		singyu 			= trim(#{singyu}),
+		suyeop_gubun 	= trim(#{suyeop_gubun}),
+<!-- 		adong_id 		= trim(#{adong_id}), -->
+		suyeop_cnt 		= trim(#{suyeop_cnt}),
+		napip_gbn 		= trim(#{napip_gbn}),
+		napip_date 		= trim(#{napip_date}),
+		voucher_amt		= trim(#{voucher_amt}),
+		napip_amt 		= trim(#{napip_amt}),
+<!-- 		suyeopPyeongga 	= trim(#{suyeopPyeongga}), -->
+		up_date 		= NOW() , 
+		up_user 		= #{up_user}
+	where suyeop_id 	= #{suyeop_id}
+</update>
+
+<update id="suyeopDelete" parameterType="common.vo.SuyeopVo">
+/*	AdminSuyeop.suyeopDelete	수업관리 삭제	*/
+	update t_suyeop 
+	set
+		del_yn 	= 'Y',
+		up_date = NOW() , 
+		up_user = #{up_user}
+	where suyeop_id = #{suyeop_id}
+</update>
+
+<update id="suyeopDeleteCancel" parameterType="common.vo.SuyeopVo">
+/*	AdminSuyeop.suyeopDeleteCancel	수업관리 삭제취소	*/
+	update t_suyeop 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where suyeop_id = #{suyeop_id}
+</update>
+
+<select id="suyeopSelectAdong" resultType="common.vo.VoucherVo" parameterType="java.lang.String">
+	/*	AdminSuyeop.suyeopList	수업관리 리스트 셀릭트*/
+	select 	
+		v.voucher_id, 
+		v.gwamok,
+		v.suyeop_gubun,
+		v.voucher_amt, 
+		v.suyeop_cnt, 
+		v.suyeop_amt, 
+		v.del_yn
+	from t_voucher v INNER join t_adong a
+	on v.voucher_id = a.voucher_id
+	where v.del_yn = 'N'
+	and a.adong_id = #{adong_id}
+</select>
+
+<select id="suyeopSelectSuyeopryo" resultType="common.vo.SuyeopryoVo" parameterType="java.util.HashMap">
+	/*	AdminSuyeop.suyeopSelectSuyeopryo	수업관리 수업료 셀릭트*/
+	select 	
+		suyeopryo_id, 
+		suyeop_month, 
+		gwamok, 
+		(select cd_name from t_com_cd where cd_id = gwamok) as gwamok_name, 
+		suyeop_gubun, 
+		(select cd_name from t_com_cd where cd_id = suyeop_gubun) as suyeop_gubun_name,
+		cash_charge, 
+		card_charge, 
+		del_yn, 
+		in_date, 
+		in_user,
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		up_user,
+		(select user_name from t_user a where a.user_id = c.up_user) up_user_name
+	from t_suyeopryo c
+	where c.del_yn = 'N'
+	and c.gwamok = #{gwamok}
+	and c.suyeop_gubun = #{suyeop_gubun}
+	limit 1;
+</select>
+</mapper>

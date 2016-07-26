@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminJindanAns">
+
+<select id="jindanAnsList" resultType="common.vo.JindanVo" parameterType="common.vo.SearchVo">
+/*	AdminJindan.jindanAnsList 진단 결과 리스트*/
+	select 	
+		jindan_ans_id, 
+		jindan_gbn, 
+		(select cd_name from t_com_cd where cd_id = jindan_gbn) as jindan_gbn_name, 
+		user_id,
+		(select user_name from t_user a where a.user_id = c.user_id) user_name,  
+		ans_num, 
+		sum(
+			case jindan_gbn
+			when '1029' then
+				(
+				case ans_val 
+				when '3' then 1
+				when '4' then 1
+				else 0
+				end
+				)
+			when '1030' then ans_val
+			else ans_val -1	
+			end 
+		) as ans_val, 
+		del_yn, 
+		in_date, 
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_jindan_ans c
+	where del_yn = 'N'
+	<if test="search_value != null and search_value !=''">
+		AND user_id in (select user_id from t_user where user_name LIKE '%${search_value}%')
+	</if>
+	<if test="search_jindan_gbn != null and search_jindan_gbn !=''">
+		AND jindan_gbn = #{search_jindan_gbn}
+	</if>
+	group by jindan_gbn, user_id, ans_num
+	order by in_date desc
+	LIMIT #{startNum},#{maxRows}
+</select>
+
+<select id="jindanAnsDetail" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanAnsDetail 진단 상세 */
+	select 	
+		(select cd_name from t_com_cd where cd_id = jindan_gbn) as jindan_gbn_name, 
+		(select user_name from t_user a where a.user_id = c.user_id) user_name,  
+		ans_num, 
+		sum(
+			case jindan_gbn
+			when '1029' then
+				(
+				case ans_val 
+				when '3' then 1
+				when '4' then 1
+				else 0
+				end
+				)
+			when '1030' then ans_val
+			else ans_val -1	
+			end 
+		) as ans_val, 
+		del_yn, 
+		in_date, 
+		(select user_name from t_user a where a.user_id = c.in_user) in_user_name, 
+		up_date, 
+		(select user_name from t_user b where b.user_id = c.up_user) up_user_name 
+	from t_jindan_ans c
+	where jindan_gbn = #{jindan_gbn}
+	and user_id = #{user_id}
+	and ans_num = #{ans_num}
+</select>
+
+<select id="jindanAnsDetailList_adhd" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanAnsDetailList_adhd adhd 진단 문항 상세 */
+	select 	
+		ja.jindan_ans_id, 
+		ja.jindan_gbn, 
+		ja.ans_num, 
+		ja.jindan_quest_no, 
+		j.jindan_txt,
+		case ja.ans_val 
+		when '3' then 1
+		when '4' then 1
+		else 0
+		end as ans_val,
+		case ans_val
+		when '1' then '전혀그렇지 않다'
+		when '2' then '약간 그렇다'
+		when '3' then '상당히 그렇다'
+		when '4' then '매우 그렇다'
+		else ''
+		end as ans_status,
+		ja.user_id, 
+		ja.del_yn, 
+		ja.in_date, 
+		ja.in_user, 
+		ja.up_date, 
+		ja.up_user	
+	from t_jindan_ans ja INNER join t_jindan j
+	on ja.jindan_gbn = j.jindan_gbn
+	and ja.jindan_quest_no = j.jindan_quest_no
+	where ja.jindan_gbn = #{jindan_gbn}
+	AND ans_num = #{ans_num}
+	AND user_id = #{user_id}
+	order by jindan_quest_no
+</select>
+
+<select id="jindanAnsDetailList_soa" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDetail soa 진단 문항 상세 */
+	select 	
+		ja.jindan_ans_id, 
+		ja.jindan_gbn, 
+		ja.ans_num, 
+		ja.jindan_quest_no, 
+		j.jindan_txt,
+		ja.ans_val,
+		case ans_val
+		when '1' then '그런 일이 거의 없다'
+		when '2' then '때로 그렇다'
+		when '3' then '자주 그렇다'
+		else ''
+		end as ans_status,
+		ja.user_id, 
+		ja.del_yn, 
+		ja.in_date, 
+		ja.in_user, 
+		ja.up_date, 
+		ja.up_user	
+	from t_jindan_ans ja INNER join t_jindan j
+	on ja.jindan_gbn = j.jindan_gbn
+	and ja.jindan_quest_no = j.jindan_quest_no
+	where ja.jindan_gbn = #{jindan_gbn}
+	AND ans_num = #{ans_num}
+	AND user_id = #{user_id}
+	order by jindan_quest_no
+</select>
+
+<select id="jindanAnsDetailList_hakseub" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanAnsDetailList_hakseub hakseub 진단 문항 상세 */
+	select 	
+		ja.jindan_ans_id, 
+		ja.jindan_gbn, 
+		ja.ans_num, 
+		ja.jindan_quest_no, 
+		j.jindan_txt,
+		ja.ans_val -1 as ans_val,
+		case ans_val
+		when '1' then '첫번째 문항'
+		when '2' then '두번째 문항'
+		when '3' then '세번째 문항'
+		else ''
+		end as ans_status,
+		ja.user_id, 
+		ja.del_yn, 
+		ja.in_date, 
+		ja.in_user, 
+		ja.up_date, 
+		ja.up_user	
+	from t_jindan_ans ja INNER join t_jindan j
+	on ja.jindan_gbn = j.jindan_gbn
+	and ja.jindan_quest_no = j.jindan_quest_no
+	and ja.ans_val = j.jindan_sub_quest_no
+	where ja.jindan_gbn = #{jindan_gbn}
+	AND ans_num = #{ans_num}
+	AND user_id = #{user_id}
+	order by jindan_quest_no
+</select>
+
+<select id="jindanAnsOne" resultType="common.vo.JindanVo" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanAnsOne 삭제시 해당차수  가져오기 */
+	select 	
+		user_id,
+		jindan_gbn,
+		ans_num
+	from t_jindan_ans
+	where jindan_ans_id = #{jindan_ans_id}
+</select>
+
+<update id="jindanAnsDelete" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDelete 진단 삭제*/
+	update t_jindan_ans 
+	set
+		del_yn 	= 'Y',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where jindan_gbn = #{jindan_gbn}
+	AND ans_num = #{ans_num}
+	AND user_id = #{user_id}
+</update>
+
+<update id="jindanAnsDeleteCancel" parameterType="common.vo.JindanVo">
+/*	AdminJindan.jindanDelete 진단 삭제 취소*/
+	update t_jindan_ans 
+	set
+		del_yn 	= 'N',
+		up_date 	= NOW() , 
+		up_user 	= #{up_user}
+	where jindan_gbn = #{jindan_gbn}
+	AND ans_num = #{ans_num}
+	AND user_id = #{user_id}
+</update>
+
+</mapper>
